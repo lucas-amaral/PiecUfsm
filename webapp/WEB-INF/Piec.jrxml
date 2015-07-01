@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Piec" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="22916253-c808-4cd6-b7a8-137a87b4a074">
 	<property name="ireport.zoom" value="1.2100000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="160"/>
+	<property name="ireport.y" value="10"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -70,11 +70,11 @@ Plano Individual de Estudos Complementares
 			</staticText>
 			<image>
 				<reportElement x="30" y="0" width="153" height="79" uuid="58ca1293-cdf9-496a-b0e1-2d99fa833869"/>
-				<imageExpression><![CDATA["C:\\Users\\Lucas\\Desktop\\ufsm.png"]]></imageExpression>
+				<imageExpression class="java.io.InputStream"><![CDATA[$P{ufsm_logo}]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="416" y="0" width="139" height="69" uuid="58da63fe-433d-4196-9531-39eeb295a01a"/>
-				<imageExpression><![CDATA["C:\\Users\\Lucas\\Desktop\\inf.png"]]></imageExpression>
+				<imageExpression class="java.io.InputStream"><![CDATA[$P{inf_logo}]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -104,7 +104,7 @@ Plano Individual de Estudos Complementares
 				</textElement>
 				<text><![CDATA[1. Descrição do perfil que aluno deseja obter através deste Plano Individual de Estudos:]]></text>
 			</staticText>
-			<textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="true">
 				<reportElement key="textField-26" x="30" y="54" width="508" height="71" uuid="5c3e3bd6-486a-485e-a07c-53e0dd2f3a66"/>
 				<textFieldExpression><![CDATA[$F{perfil}]]></textFieldExpression>
 			</textField>
@@ -171,11 +171,11 @@ Plano Individual de Estudos Complementares
 				</textElement>
 				<text><![CDATA[Data Realização]]></text>
 			</staticText>
-			<textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="true">
 				<reportElement key="textField-26" x="73" y="0" width="465" height="18" uuid="f23d6bf6-9446-4aeb-90a2-a1d950bf8087"/>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="true">
 				<reportElement key="textField-26" x="92" y="18" width="446" height="18" uuid="0b84847c-2b92-4972-a869-643918166ea7"/>
 				<textFieldExpression><![CDATA[$F{matricula}]]></textFieldExpression>
 			</textField>
@@ -183,7 +183,7 @@ Plano Individual de Estudos Complementares
 	</columnHeader>
 	<detail>
 		<band height="18" splitType="Stretch">
-			<textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="true">
 				<reportElement key="textField-26" x="30" y="0" width="205" height="18" uuid="3898d6a1-4dbb-44b6-bd60-dec9c6f0adc2"/>
 				<box topPadding="1" leftPadding="1">
 					<pen lineWidth="1.0"/>
@@ -194,7 +194,7 @@ Plano Individual de Estudos Complementares
 				</box>
 				<textFieldExpression><![CDATA[$F{disciplina}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="true">
 				<reportElement key="textField-26" x="235" y="0" width="65" height="18" uuid="be99def2-7c40-412e-b580-b8c75f48593c"/>
 				<box topPadding="1" leftPadding="1">
 					<pen lineWidth="1.0"/>
@@ -206,7 +206,7 @@ Plano Individual de Estudos Complementares
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{carga_horaria}  + " horas"]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="true">
 				<reportElement key="textField-26" x="300" y="0" width="153" height="18" uuid="337edd84-719d-4c4a-a72e-2ecaee526861"/>
 				<box topPadding="1" leftPadding="1">
 					<pen lineWidth="1.0"/>
@@ -218,7 +218,7 @@ Plano Individual de Estudos Complementares
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="true">
 				<reportElement key="textField-26" x="453" y="0" width="85" height="18" uuid="8651aa1b-21c2-4378-97af-0839eb61d562"/>
 				<box topPadding="1" leftPadding="1">
 					<pen lineWidth="1.0"/>
@@ -244,8 +244,8 @@ Plano Individual de Estudos Complementares
 				</textElement>
 				<text><![CDATA[Assinatura do(a) Aluno(a)]]></text>
 			</staticText>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField-26" x="28" y="52" width="497" height="38" uuid="c4fbadf1-3dd7-4c86-99a2-d0051ee3a4c5"/>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-26" x="28" y="42" width="497" height="38" uuid="c4fbadf1-3dd7-4c86-99a2-d0051ee3a4c5"/>
 				<box leftPadding="2">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -254,7 +254,7 @@ Plano Individual de Estudos Complementares
 				<textFieldExpression><![CDATA[$F{parecer_relator}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-11" x="28" y="37" width="497" height="15" uuid="adb03b4e-9d40-4a73-8a80-ed49031ca92b"/>
+				<reportElement key="staticText-11" x="28" y="27" width="497" height="15" uuid="adb03b4e-9d40-4a73-8a80-ed49031ca92b"/>
 				<box leftPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -266,7 +266,7 @@ Plano Individual de Estudos Complementares
 				<text><![CDATA[PARECER DO RELATOR DO COLEGIADO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-11" x="28" y="121" width="497" height="15" uuid="97c8071a-0d30-45d4-ae18-a78b45e965bd"/>
+				<reportElement key="staticText-11" x="28" y="116" width="497" height="15" uuid="97c8071a-0d30-45d4-ae18-a78b45e965bd"/>
 				<box leftPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -277,8 +277,8 @@ Plano Individual de Estudos Complementares
 				</textElement>
 				<text><![CDATA[PARECER DO COLEGIADO:]]></text>
 			</staticText>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField-26" x="28" y="136" width="497" height="47" uuid="ce065c33-df82-496e-ac06-ae1f2742e6b3"/>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-26" x="28" y="131" width="497" height="47" uuid="ce065c33-df82-496e-ac06-ae1f2742e6b3"/>
 				<box leftPadding="2">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -287,10 +287,10 @@ Plano Individual de Estudos Complementares
 				<textFieldExpression><![CDATA[$F{parecer_colegiado}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-1" x="179" y="102" width="192" height="1" uuid="76006415-dc9c-4968-9438-5db2aab5f5dc"/>
+				<reportElement key="line-1" x="179" y="97" width="192" height="1" uuid="76006415-dc9c-4968-9438-5db2aab5f5dc"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-11" x="213" y="102" width="123" height="15" uuid="29d2e4f3-ac03-4a05-ac5b-6056d0f28b13"/>
+				<reportElement key="staticText-11" x="213" y="97" width="123" height="15" uuid="29d2e4f3-ac03-4a05-ac5b-6056d0f28b13"/>
 				<textElement textAlignment="Center">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -324,7 +324,7 @@ Plano Individual de Estudos Complementares
 				</textElement>
 				<text><![CDATA[Total de Horas]]></text>
 			</staticText>
-			<textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="true">
 				<reportElement key="textField-26" x="235" y="0" width="65" height="18" uuid="bb7f5a01-24df-4f49-95ee-0840b410790a"/>
 				<box topPadding="0" leftPadding="0">
 					<pen lineWidth="1.0"/>
