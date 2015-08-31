@@ -1,0 +1,339 @@
+    /*
+     * Author: Carlos Alvarez
+     * URL: http://alvarez.is
+     *
+     * Project Name: STANLEY - Free Bootstrap 3 Theme
+     * Version: 1.0
+     * URL: http://blacktie.co
+     */
+
+    * { outline: none !important; }
+    .clearfix:after 		{ content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+    html { background: #f4f4f4; }
+
+    body {
+        background-color: #ffffff;
+        font-family: Lato, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #767676;
+    }
+
+    /* Titles */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Lato', sans-serif;
+        font-weight: 900;
+        color: #063078;
+    }
+
+    h1 {
+        font-size: 35px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+
+
+    /* Paragraph & Typographic */
+    p {
+        line-height: 28px;
+        margin-bottom: 25px;
+        font-size: 18px;
+    }
+
+    .centered {
+        text-align: center;
+    }
+
+    /* Links */
+    a, .panel-heading a {
+        color: #008289;
+        word-wrap: break-word;
+        transition: color 0.1s ease-in, background 0.1s ease-in;
+    }
+
+    a:hover,
+    a:focus {
+        color: #063078;
+        text-decoration: none;
+        outline: 0;
+    }
+
+    a:before,
+    a:after {
+        transition: color 0.1s ease-in, background 0.1s ease-in;
+    }
+
+     hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #ccc;
+        margin: 1em 0;
+        padding: 0;
+    }
+
+
+    .navbar {
+        text-transform: none;
+        margin-bottom: 0;
+    }
+
+    .navbar-inverse {
+        background: #f4f4f4;
+        border-color: #EAEAEA;
+    }
+
+    .navbar-inverse .navbar-nav > li > a, a.saiba-mais, button.saiba-mais {
+        background: #008289;
+        color: #fff;
+        font-size: 1.1em;
+        transition: 0.5s;
+        margin-left: 10px;
+        margin-top: 40px;
+        border-radius: 7px;
+    }
+
+    a.saiba-mais { padding: 0.5em 1em; font-size: 23px; }
+
+    .navbar-inverse .navbar-nav > li > a:hover, a.saiba-mais:hover, button.saiba-mais:hover {
+        background: #063078;
+        color: #fff;
+    }
+
+    .navbar-inverse .navbar-nav > li > a span.glyphicon {
+        color: #fff;
+        font-size: 1em; margin-right: 5px !important;
+    }
+    a.saiba-mais span.glyphicon {
+        color: #fff;
+        font-size: 1em; margin-left: 5px !important;
+    }
+
+    .navbar-inverse .navbar-brand {
+        color: #008289;
+    }
+
+    .navbar-inverse .navbar-toggle {
+        border-color: transparent;
+    }
+
+    .progress-bar-theme {
+      background-color: #008289;
+    }
+
+    .navbar-inverse .navbar-toggle .icon-bar {
+        background-color: #fff;
+    }
+
+    .navbar-inverse .navbar-toggle, .navbar-inverse .navbar-toggle {
+        background-color: #008289;
+    }
+
+    .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+        background-color: #063078;
+    }
+
+    .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+        border: none;
+    }
+
+    .navbar-inverse .in { transition: 0.5s; background: #008289 !important; }
+    .navbar-inverse .in a { color: #fff !important; }
+    .navbar-inverse .in .navbar-nav > li > a { background: none; margin-top: 0; text-align: center; }
+
+    /* Helpers */
+
+    .mt {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .pt {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .area { background: #f4f4f4; font-size: 1.3em; text-align: center; padding: 2em 0.5em; -moz-border-radius: 7px; -khtml-border-radius: 7px; -webkit-border-radius: 7px; border-radius: 7px; }
+
+    .form-group input, .form-control { background: #f4f4f4; font-size: 1.2em; }
+
+    .nav > li > a:hover, .nav > li > a:focus { background: #E5E5E5; border-color: #E5E5E5; }
+    .nav > li.active > a:hover, .nav > li.active > a:focus { background: #f4f4f4; border-color: #E5E5E5; border-bottom-color: #f4f4f4; }
+
+    .nav-tabs { border-bottom: 1px solid #E5E5E5;  }
+    .nav-tabs li { font-size: 1.3em; }
+    .nav-tabs li a { border-color: #EDEDED; }
+    .nav-tabs li.active a { background: #f4f4f4; border-color: #E5E5E5; border-bottom-color: #f4f4f4; }
+    .tab-content {
+        padding: 0.4em;
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+        background: #f4f4f4; border-left: 1px solid #E5E5E5; border-right: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+
+    .tab-content h3 { margin: 1.5em 0 1em 0; }
+
+    .panel-default { border-color: #e5e5e5;font-size: 1.2em; box-shadow: none; }
+    .panel-default > .panel-heading {
+        color: #333333;
+        background-color: #fff;
+        border-color: #e5e5e5;
+    }
+    .panel-default > .panel-heading a, .panel-default > .panel-heading span { font-size: 1.05em; }
+    .panel-group .panel-heading + .panel-collapse .panel-body { border-top: 1px solid #e5e5e5; }
+
+    .panel-group span.glyphicon {
+        border-radius: 3px;
+        font-size: 0.7em; background: #008289; color: #fff; padding: 3px 6px; width: 24px; margin-left: 10px; }
+
+    .logo { transition: 0.5s; }
+    .logo:hover { opacity: 0.6;  }
+
+    /*.faixa {*/
+        /*box-shadow: inset 0 0 30px rgba(0,0,0,0.15);*/
+        /*height: 200px; background: url(../img/barra.jpg) center no-repeat;  }*/
+
+    .faixa-interna {
+        box-shadow: inset 0 0 30px rgba(0,0,0,0.15);
+        height: 20px; margin: 0; background: #008289; text-align: center; }
+
+    html .faixa-interna h1 { margin: 0 !important; padding: 0 !important; line-height: 60px; color: #fff; }
+
+    /* +++++ WRAP SECTIONS +++++ */
+
+    #ww {
+        padding-top: 70px;
+        padding-bottom: 70px;
+        background-color: #fff;
+    }
+
+
+    #footer {
+        background-color: #f4f4f4;
+        border-top: 1px solid #EAEAEA;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        color: #767676;
+    }
+
+    #footer p {
+        color: #767676;
+    }
+
+    #footer h4 {
+        color: white;
+        text-transform: uppercase;
+        padding-bottom: 20px;
+    }
+
+    #footer a { color: #008289; }
+    #footer a:hover { color: #063078; }
+
+    .fones span { font-size: 24px; color: #063078; display: block; font-weight: 300 !important; line-height: 1.2em; }
+    .fones {
+        border-radius: 7px;
+        padding: 0 2em 0.5em 2em; text-align: center; }
+    .brasao { float: left; }
+
+    #footer i.glyphicon { color: #063078; font-size: 0.8em; }
+
+    #change-form i.glyphicon { color: #fff; }
+
+    .separador { margin: 2em auto; }
+
+    /* +++++ Color Wraps / Blog Page +++++ */
+
+    #grey {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        background-color: #f2f2f2;
+    }
+
+    #white {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        background-color: #ffffff;
+    }
+
+
+    /* ================== PORTFOLIO IMAGES HOVER EFFECT ================== */
+    /* Effects also are controled by hover.zoom.js */
+    .zoom {
+        display:block;
+        position:relative;
+        overflow:hidden;
+        /*background:transparent url(../img/loader.gif) no-repeat center;*/
+    }
+
+        .zoom img { display:none }
+
+            .zoomOverlay {
+                position:absolute;
+                top:0; left:0;
+                bottom:0; right:0;
+                display:none;
+                /*background-image:url(../img/zoom.png);*/
+                background-repeat:no-repeat;
+                background-position:center;
+            }
+
+    .zoom2 {
+        opacity: 1;
+    }
+
+    .zoom2:hover {
+        opacity: 0.5;
+    }
+
+    /* glyphicon Configuration */
+
+    .glyphicon {
+        font-size: 40px;
+        color: #063078;
+    }
+
+    .panel-body { text-align: left; padding: 2em;}
+
+    /* Equipe */
+    #equipe .integrante { background: #063078; color: #fff; }
+    #equipe .col-sm-3 { margin-top: 20px;}
+    #areas .atuacao, #areas .atuacao a { background: #008289; color: #fff; }
+    #areas .col-sm-3 { margin-top: 20px;}
+
+    .zoom { box-shadow: 0 0 6px rgba(0,0,0,0.2); }
+
+    @media (min-width: 1200px) {
+        .menu-rodape { width: 49%; float: right; text-align: center; padding-top: 0; }
+    }
+
+    @media (max-width: 1199px) {
+
+        .logo { width: 260px; height: auto; }
+        .brasao { margin-bottom: 2em; }
+        .brasao-rodape { width: 49%; float: left; }
+        .menu-rodape { width: 49%; float: right; text-align: center; padding-top:0; }
+    }
+
+    @media (max-width: 992px) {
+
+        .menu-item-inicio { display: none !important; }
+        .brasao { float: none; margin-bottom: 2em; }
+        .brasao-rodape { width: 49%; float: left; }
+        .menu-rodape { width: 49%; float: right; text-align: center; padding-top: 2em; }
+        .carousel-caption h1 { font-size: 2em; padding: 0; margin: 0; }
+        .navbar-right { float: left !important; margin: -40px 0 20px 0 !important; }
+    }
+
+
+    @media (max-width: 768px) {
+        .logo { width: 300px; height: auto; }
+        .brasao-rodape { width: 90%; float: none; margin: auto; }
+        .menu-rodape { width: 90%; float: none; text-align: center; padding-top: 2em; margin: auto; }
+        .area { padding: 0; margin: 0.3em auto; }
+        .carousel-caption h1 { font-size: 1.5em; padding: 0; margin: 0; }
+        .carousel-caption p { display: none; }
+        .navbar-right { float: none !important; margin: auto !important; }
+        .logo-intro, .logo { width: 100% !important; }
+        .logo { max-width: 300px; }
+    }
