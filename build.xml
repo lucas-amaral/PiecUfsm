@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PiecUfsm" default="webapp" basedir=".">
+    <!-- =================================================================== -->
+    <!-- Inicializa o build                                                  -->
+    <!-- =================================================================== -->
+    <tstamp/>
+
+    <!-- Permite que os usuários sobrescrevam as propriedades do build. -->
+    <property file="${basedir}/properties.properties"/>
+    <!-- Inicializa os caminhos. -->
+    <path id="build.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    <!-- Importa -->
+    <import file="${common.targets.xml}" optional="true"/>
+
+    <!-- =================================================================== -->
+    <!-- Limpa o build                                                       -->
+    <!-- =================================================================== -->
+    <target name="clean-all" depends="clean" description="Remove os diretórios e arquivos temporários">
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="clean" description="Remove os diretórios e arquivos temporários">
+        <delete dir="${build.webapp.dir}"/>
+        <delete dir="${build.dir}"/>
+    </target>
+    <!-- =================================================================== -->
+    <!-- Compila os fontes                                                   -->
+    <!-- =================================================================== -->
+    <target name="compile"
+            description="Compila os fontes">
+        <!-- Cria os diretórios -->
+        <!--<mkdir dir="${build.dir}"/>-->
+        <mkdir dir="${build.classes.dir}"/>
+        <!-- Compila os fontes -->
+        <javac srcdir="${src.java.dir}"
+               destdir="${build.classes.dir}"
+               encoding="${src.encoding}"
+               source="${src.source}"
+               target="${src.target}"
+               optimize="${build.compiler.optimize}"
+               debug="${build.compiler.debug}"
+               debuglevel="${build.compiler.debuglevel}"
+               deprecation="${build.compiler.deprecation}"
+               classpathref="build.classpath"
+               includeantruntime="false"
+               includejavaruntime="false">
+            <compilerarg line="${build.compiler.args}"/>
+        </javac>
+        <!-- Cria os stubs RMI -->
+        <rmic base="${build.classes.dir}"
+              includes="${src.java.remote.classes}"
+              verify="${rmic.verify}"/>
+        <!-- Copia os recursos -->
+        <copy todir="${build.classes.dir}">
+            <fileset dir="${src.java.dir}">
+                <exclude name="**/*.java"/>
+            </fileset>
+            <fileset dir="${src.dir}/main/resources"/>
+        </copy>
+    </target>
+
+    <path id="svnant.classpath">
+        <fileset dir="${lib.dir}/svnant">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="webapp" depends="compile" description="Cria o diretório com a aplicação web">
+
+        <!-- Copia as páginas. -->
+        <mkdir dir="${build.webapp.dir}"/>
+        <copy todir="${build.webapp.dir}">
+            <fileset dir="${src.web.dir}">
+                <exclude name="**/*.MF"/>
+            </fileset>
+        </copy>
+        <!-- Copia as bibliotecas. -->
+        <mkdir dir="${build.webapp.dir}/WEB-INF/lib"/>
+        <copy todir="${build.webapp.dir}/WEB-INF/lib">
+            <fileset dir="${lib.dir}">
+                <exclude name="servlet-api.jar"/>
+            </fileset>
+        </copy>
+        <touch file="${build.webapp.dir}/WEB-INF/web.xml"/>
+    </target>
+
+    <target name="build-lib" description="Cria o diretório com a aplicação web">
+        <copy todir="${build.webapp.dir}/../../lib">
+            <fileset dir="${lib.dir}"/>
+        </copy>
+    </target>
+
+    <target name="webapp-sem-lib" depends="compile" description="Cria o diretório com a aplicação web">
+        <!-- Copia as páginas. -->
+        <mkdir dir="${build.webapp.dir}"/>
+        <copy todir="${build.webapp.dir}">
+            <fileset dir="${src.web.dir}">
+                <exclude name="**/*.MF"/>
+            </fileset>
+        </copy>
+        <!-- Copia as bibliotecas. -->
+        <mkdir dir="${build.webapp.dir}/WEB-INF/lib"/>
+        <touch file="${build.webapp.dir}/WEB-INF/web.xml"/>
+    </target>
+
+    <target name="build-jsp" description="copia somente o conteudo html/jsp para o servidor">
+        <mkdir dir="${build.webapp.dir}"/>
+        <copy todir="${build.webapp.dir}">
+            <fileset dir="${src.web.dir}">
+                <exclude name="**/*.MF"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="war" description="Cria o arquivo .war com a aplicação web empacotada">
+        <mkdir dir="${dist.dir}"/>
+        <!-- Cria o war -->
+        <!--<xmlproperty file="${build.webapp.dir}/META-INF/context.xml" collapseAttributes="true"/>-->
+
+        <!--<condition property="vazio">-->
+            <!--<equals arg1="${Context.path}" arg2=""/>-->
+        <!--</condition>-->
+
+        <war destfile="${dist.dir}/piec.war"
+             basedir="${build.webapp.dir}"
+             excludes="**/WEB-INF/web.xml"
+             webxml="${build.webapp.dir}/WEB-INF/web.xml"
+             compress="${dist.war.compress}">
+        </war>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Cria a distribuição completa (.jar e setup).                        -->
+    <!-- =================================================================== -->
+    <target name="dist-full" depends="clean, webapp, war" description="Cria a distribuição completa">
+        <!-- Copia a documentação -->
+        <copy todir="${dist.dir}">
+            <fileset dir="${basedir}" includes="${dist.docs.files}"/>
+        </copy>
+        <fixcrlf srcdir="${dist.dir}" includes="${dist.docs.files}" eol="crlf"/>
+    </target>
+
+    <target name="dist-sem-lib" depends="clean, webapp-sem-lib, war" description="Cria a distribuição completa">
+        <!-- Copia a documentação -->
+        <copy todir="${dist.dir}">
+            <fileset dir="${basedir}" includes="${dist.docs.files}"/>
+        </copy>
+        <fixcrlf srcdir="${dist.dir}" includes="${dist.docs.files}" eol="crlf"/>
+    </target>
+
+    <target name="schemaexport">
+        <taskdef name="schemaexport" classname="org.hibernate.tool.hbm2ddl.SchemaExportTask" classpathref="build.classpath"/>
+        <schemaexport config="src/java/hibernate.cfg.xml" quiet="no" text="yes" drop="no" delimiter=";" output="schema-export.sql">
+            <fileset dir="src/java/br/com/mega/silas/model/">
+                <include name="**/*.hbm.xml"/>
+            </fileset>
+        </schemaexport>
+    </target>
+
+</project>
