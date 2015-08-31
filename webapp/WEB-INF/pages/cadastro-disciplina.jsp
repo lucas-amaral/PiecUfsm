@@ -57,7 +57,7 @@
             <c:if test="${not empty disciplina.id}">
                 <a href="${pageContext.request.contextPath}/cadastro-disciplina-remover.htm"  style="float: right;"><input class="btn btn-danger" type="button" value="Excluir"/></a>
             </c:if>
-            <input class="btn btn-success" type="submit" value="Salvar" style="margin-right: 5px; float: right;"/>
+            <input id="salvar" class="btn btn-success" type="submit" value="Salvar" style="margin-right: 5px; float: right;"/>
         </fieldset>
     </form:form>
 </div>

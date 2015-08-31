@@ -27,6 +27,7 @@
     </div>
     <c:if test="${not empty ex}">
         <div id="exception" style="display: none;">
+            <h4>Erro!</h4>
             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
             ${ex}
         </div>

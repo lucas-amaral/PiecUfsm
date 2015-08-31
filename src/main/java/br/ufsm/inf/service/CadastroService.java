@@ -144,6 +144,7 @@ public class CadastroService {
 
     public Usuario getUsuario(String nome) {
         List<Usuario> usuarios = (List<Usuario>) dao.consulta("select u from usuario u where u.login ='" + nome + "'");
+//        List<Usuario> usuarios = (List<Usuario>) dao.consulta("select u from usuario u where u.nome ='" + nome + "'");
         if (!usuarios.isEmpty()) {
             return usuarios.iterator().next();
         }

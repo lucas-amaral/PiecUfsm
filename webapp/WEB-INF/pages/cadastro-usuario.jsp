@@ -28,7 +28,7 @@
                         <form:input path="login" cssClass="form-control" cssStyle="width: 200px;" disabled="true"/>
                     </td>
                     <td style="vertical-align: bottom; white-space: nowrap;">
-                        <c:if test="${not empty sessionScope.usuarioLogado.piec or sessionScope.usuarioLogado.tipo ne 'Aluno'}">
+                        <c:if test="${not empty usuario.piec.id and (not empty sessionScope.usuarioLogado.piec or sessionScope.usuarioLogado.tipo ne 'Aluno')}">
                             <label style="display: block;">Piec</label>
                             <a class="tooltip-class" href="cadastro-piec.htm?idPiec=${usuario.piec.id}"><img src="${pageContext.request.contextPath}/resources/img/Document2.png" data-toggle="tooltip" data-placement="left" title="Editar piec"/></a>
                         </c:if>
