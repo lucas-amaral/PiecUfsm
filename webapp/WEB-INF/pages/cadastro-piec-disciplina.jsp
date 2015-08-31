@@ -62,12 +62,14 @@
                 </c:if>
             </table>
 
-            <c:if test="${(empty piecDisciplina.aprovada or piecDisciplina.aprovada) and sessionScope.usuarioLogado.id eq piecDisciplina.piec.aluno.id}">
+            <c:if test="${(empty piecDisciplina.aprovada or piecDisciplina.aprovada) and sessionScope.usuarioLogado.id eq piecDisciplina.piec.aluno.id and not piecDisciplina.piec.solicitarAvalacao}">
                 <a href="#" onclick="submeteAcao('RemoverPiecDisciplina', document.getElementById('piecDisciplina'));" style="float: right;">
                     <input class="btn btn-danger" type="button" value="Remover"/>
                 </a>
             </c:if>
-            <input class="btn btn-success" type="submit" value="Salvar" style="margin-right: 5px; float: right;"/>
+            <c:if test="${sessionScope.usuarioLogado.membroColegiado or not piecDisciplina.piec.solicitarAvalacao}">
+                <input class="btn btn-success" type="submit" value="Salvar" style="margin-right: 5px; float: right;"/>
+            </c:if>
             <a href="${pageContext.request.contextPath}/cadastro-piec.htm?idPiec=${piecDisciplina.piec.id}"><button class="btn btn-default" type="button">Voltar para piec</button></a>
         </fieldset>
     </form:form>

@@ -27,6 +27,14 @@
                         <form:label path="login">Login</form:label>
                         <form:input path="login" cssClass="form-control" cssStyle="width: 200px;" disabled="true"/>
                     </td>
+                    <c:if test="${sessionScope.usuarioLogado.membroColegiado}">
+                        <td style="vertical-align: bottom;">
+                            <form:label path="ativo">&nbsp;</form:label>
+                            <div class="checkbox">
+                                <form:checkbox path="ativo"/> Ativo
+                            </div>
+                        </td>
+                    </c:if>
                     <td style="vertical-align: bottom; white-space: nowrap;">
                         <c:if test="${not empty usuario.piec.id and (not empty sessionScope.usuarioLogado.piec or sessionScope.usuarioLogado.tipo ne 'Aluno')}">
                             <label style="display: block;">Piec</label>

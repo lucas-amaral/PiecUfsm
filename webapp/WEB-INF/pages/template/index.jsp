@@ -60,6 +60,9 @@
                 <c:if test="${not empty sessionScope.usuarioLogado}">
                     <ul class="nav navbar-nav navbar-right">
                         <c:choose>
+                            <c:when test="${not sessionScope.usuarioLogado.ativo}">
+                                <li><a href="cadastro-usuario.htm?idUsuario=${sessionScope.usuarioLogado.id}"><img src="${pageContext.request.contextPath}/resources/img/user.gif"/> Usuário</a></li>
+                            </c:when>
                             <c:when test="${sessionScope.usuarioLogado.tipo eq 'Aluno'}">
                                 <li><a href="cadastro-usuario.htm?idUsuario=${sessionScope.usuarioLogado.id}"><img src="${pageContext.request.contextPath}/resources/img/user.gif"/> Aluno</a></li>
                                 <c:if test="${not empty sessionScope.usuarioLogado.piec}">

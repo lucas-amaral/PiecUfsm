@@ -21,7 +21,7 @@
                 <tr>
                     <td colspan="2">
                         <form:label path="perfil">Descrição do perfil que o aluno deseja obter através deste plano individual de estudos</form:label>
-                        <form:textarea path="perfil" cssClass="form-control" cssStyle="width: 100%;" disabled="${sessionScope.usuarioLogado.id ne piec.aluno.id}"
+                        <form:textarea path="perfil" cssClass="form-control" cssStyle="width: 100%;" disabled="${sessionScope.usuarioLogado.id ne piec.aluno.id or piec.solicitarAvalacao}"
                                        rows="${2+((fn:length(piec.perfil)/350)*2)}"/>
                     </td>
                 </tr>
@@ -41,7 +41,7 @@
                                     <img class="tooltip-class" src="${pageContext.request.contextPath}/resources/img/Search.png" data-toggle="tooltip" data-placement="left" title="Ver arquivo" onclick="window.open('carregar-arquivo.htm?id=${documento.id}&abrir=true');"/>
                                 </td>
                                 <td style="width: 1px; text-align: right; padding: 9px 1px;">
-                                    <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id}">
+                                    <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id and not piec.solicitarAvalacao}">
                                         <a href="${pageContext.request.contextPath}/cadastro-piec-arquivo-remover.htm?idArquivoRemover=${documento.id}" class="tooltip-class">
                                             <img src="${pageContext.request.contextPath}/resources/img/Cancel.png" data-toggle="tooltip" data-placement="left" title="Remover arquivo"/>
                                         </a>
@@ -49,7 +49,7 @@
                                 </td>
                             </tr>
                         </c:forEach>
-                        <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id}">
+                        <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id and not piec.solicitarAvalacao}">
                             <tr>
                                 <td>
                                     <input type="file" name="arquivoHistoricoEscolar" id="arquivoHistoricoEscolar" style="margin: 0; display: inline-block;"/>
@@ -111,7 +111,7 @@
                             </td>
                             <td style="width: 1px; text-align: right; padding: 9px 1px;"  <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id}">colspan="2" </c:if>>
                                 <a class="tooltip-class" href="${pageContext.request.contextPath}/cadastro-piec-disciplina.htm?idPiecDisciplina=${piecDisciplina.id}" data-toggle="tooltip" data-placement="left" title="Editar disciplina"><img src="${pageContext.request.contextPath}/resources/img/Write.png"/></a>
-                                <c:if test="${(empty piecDisciplina.aprovada or piecDisciplina.aprovada) and sessionScope.usuarioLogado.id eq piec.aluno.id}">
+                                <c:if test="${(empty piecDisciplina.aprovada or piecDisciplina.aprovada) and sessionScope.usuarioLogado.id eq piec.aluno.id and not piec.solicitarAvalacao}">
                                     <a href="${pageContext.request.contextPath}/cadastro-disciplina-piec-remover.htm?idPiecDisciplinaRemover=${piecDisciplina.id}">
                                         <img src="${pageContext.request.contextPath}/resources/img/Cancel.png" data-toggle="tooltip" data-placement="right" title="Remover disciplina" class="tooltip-class"/>
                                     </a>
@@ -206,7 +206,7 @@
                             </c:if>
                         </tr>
                     </c:if>
-                    <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id}">
+                    <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id and not piec.solicitarAvalacao}">
                         <tr>
                             <td colspan="2" style="width: 60%;">
                                 <form:select path="idDisciplinaAdicionar" cssStyle="width: 100% !important;" cssClass="form-control"
@@ -285,24 +285,25 @@
                     </c:if>
                 </table>
             </fieldset>
-            <c:if test="${sessionScope.usuarioLogado.membroColegiado}">
-                <table style="width: 100%; margin-top: 20px;">
-                    <tr>
-                        <td>
-                            <form:label path="parecerRelator">Parecer do relator</form:label>
-                            <form:textarea path="parecerRelator" cssClass="form-control" cssStyle="width: 100%;" rows="${2+((fn:length(piec.parecerRelator)/350)*2)}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <form:label path="parecerColegiado">Parecer do colegiado</form:label>
-                            <form:textarea path="parecerColegiado" cssClass="form-control" cssStyle="width: 100%;" rows="${2+((fn:length(piec.parecerColegiado)/350)*2)}"/>
-                        </td>
-                    </tr>
-                </table>
-            </c:if>
+            <table style="width: 100%; margin-top: 20px;">
+                <tr>
+                    <td>
+                        <form:label path="parecerRelator">Parecer do relator</form:label>
+                        <form:textarea path="parecerRelator" cssClass="form-control" cssStyle="width: 100%;" rows="${2+((fn:length(piec.parecerRelator)/350)*2)}" disabled="${not sessionScope.usuarioLogado.membroColegiado}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="parecerColegiado">Parecer do colegiado</form:label>
+                        <form:textarea path="parecerColegiado" cssClass="form-control" cssStyle="width: 100%;" rows="${2+((fn:length(piec.parecerColegiado)/350)*2)}" disabled="${not sessionScope.usuarioLogado.membroColegiado}"/>
+                    </td>
+                </tr>
+            </table>
         </fieldset>
-        <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id and not empty piec.piecDisciplinas}">
+        <c:if test="${piec.solicitarAvalacao && sessionScope.usuarioLogado.membroColegiado}">
+            <input class="btn btn-danger" type="submit" name="acao" value="Retornar para ajustes do aluno"/>
+        </c:if>
+        <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id and not empty piec.piecDisciplinas and not piec.solicitarAvalacao}">
             <input class="btn btn-success" type="submit" name="acao" value="Solicitar avaliação do plano ao colegiado do curso"/>
         </c:if>
         <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id or sessionScope.usuarioLogado.membroColegiado and not piec.solicitarAvalacao}">

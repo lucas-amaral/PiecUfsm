@@ -13,6 +13,7 @@ public class Usuario {
     private Long id;
     private String nome;
     private String login;
+    private Boolean ativo;
     private Integer matricula;
     private String tipo = TIPO_ALUNO;
     private Piec piec;
@@ -36,6 +37,15 @@ public class Usuario {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Basic
+    public Boolean getAtivo() {
+        return ativo == null || ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     @Basic

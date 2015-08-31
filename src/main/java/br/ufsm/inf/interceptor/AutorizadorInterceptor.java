@@ -34,7 +34,13 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
         }
         if(request.getSession().getAttribute("usuarioLogado") != null) {
             Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-            if (usuario.getTipo().equals(Usuario.TIPO_ALUNO)) {
+            if (!usuario.getAtivo()) {
+                if (uri.contains("cadastro-usuario.htm")) {
+                    return true;
+                }
+                response.sendRedirect("login.htm");
+                return false;
+            } else if (usuario.getTipo().equals(Usuario.TIPO_ALUNO)) {
                 for (String uriAluno : urisAluno) {
                     if (uri.contains(uriAluno)) {
                         return true;

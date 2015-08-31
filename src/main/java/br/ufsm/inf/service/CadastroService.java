@@ -84,8 +84,11 @@ public class CadastroService {
     public List<Object> buscaAvancada(String tabela, Busca busca) {
         String consulta = "select x from " + tabela + " x";
         String separador = " where ";
-        if (tabela.equals("disciplina") && busca.getAtivo()) {
+        if (tabela.equals("disciplina")) {
             consulta += separador + " ativa = " + busca.getAtivo();
+            separador = " and ";
+        } else if (tabela.equals("usuario")) {
+            consulta += separador + " ativo = " + busca.getAtivo();
             separador = " and ";
         }
         if (busca.getExpressao() != null && !busca.getExpressao().equals("")) {

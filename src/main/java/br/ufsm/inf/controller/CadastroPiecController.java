@@ -65,9 +65,13 @@ public class CadastroPiecController {
             } else if (acao != null && acao.equals("Aprovar")) {
                 piec.setDataAprovacao(new Date());
                 piec.setSolicitarAvalacao(false);
-                cadastroService.criaNovoBloco(piec.getDisciplinas());
+                if (!piec.getPossuiDisciplinaOutraInstituicao()) {
+                    cadastroService.criaNovoBloco(piec.getDisciplinas());
+                }
             } else if (acao != null && acao.equals("Solicitar avaliação do plano ao colegiado do curso")) {
                 piec.setSolicitarAvalacao(true);
+            } else if (acao != null && acao.equals("Retornar para ajustes do aluno")) {
+                piec.setSolicitarAvalacao(false);
             }
             cadastroService.atualizaObjeto(piec);
             model.addAttribute("sucesso", "Piec alterado com sucesso");

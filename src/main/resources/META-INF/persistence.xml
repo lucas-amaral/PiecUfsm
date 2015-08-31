@@ -17,7 +17,7 @@
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
             <property name="hibernate.connection.username" value="piec" />
             <property name="hibernate.connection.password" value="piec" />
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/piec" />
+            <property name="hibernate.connection.url" value="jdbc:mysql://granito.mega:3306/piec" />
 
             <!-- CONFIGURACAO -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

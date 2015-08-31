@@ -139,14 +139,22 @@ public class Piec {
 
     @Transient
     public Boolean getPossuiDisciplinasExternas() {
-        Boolean possui = false;
         for (PiecDisciplina piecDisciplina : getPiecDisciplinas()) {
             if (!piecDisciplina.getDisciplina().getPreAprovada()) {
-                possui = true;
-                break;
+                return true;
             }
         }
-        return possui;
+        return false;
+    }
+
+    @Transient
+    public Boolean getPossuiDisciplinaOutraInstituicao() {
+        for (Disciplina d : getDisciplinas()) {
+            if (!d.getInstituicao().getSigla().equals("UFSM")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //Propriedades command

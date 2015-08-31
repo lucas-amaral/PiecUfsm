@@ -24,6 +24,11 @@
                         <button class="btn btn-default" type="submit">Buscar</button>
                     </th>
                 </tr>
+                <tr>
+                    <td>
+                        <form:checkbox path="ativo"/> Somente ativos
+                    </td>
+                </tr>
             </table>
             <table style="width: 100%;" class="table table-striped">
                 <tr>
