@@ -30,7 +30,7 @@ public class DisciplinasController {
     public String carregaFormulario(ModelMap model)  {
         Busca busca = new Busca();
         model.addAttribute(busca);
-        model.addAttribute("disciplinas", cadastroService.disciplinasAtivas());
+        model.addAttribute("disciplinas", cadastroService.buscaAvancada("disciplina", busca));
         return "disciplinas";
     }
 
@@ -44,7 +44,9 @@ public class DisciplinasController {
         } else {
             model.addAttribute("erro", "Disciplina já utilizada em algum plano.");
         }
-        model.addAttribute("disciplinas", cadastroService.disciplinasAtivas());
+        Busca busca = new Busca();
+        model.addAttribute(busca);
+        model.addAttribute("disciplinas", cadastroService.buscaAvancada("disciplina", busca));
         return "disciplinas";
     }
 
