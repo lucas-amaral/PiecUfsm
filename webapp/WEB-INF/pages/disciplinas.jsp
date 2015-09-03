@@ -48,7 +48,7 @@
                         <td style="text-align: right;">${disciplina.cargaHoraria} horas</td>
                         <td style="width: 1px; padding: 9px 1px;"><a class="tooltip-class" href="${pageContext.request.contextPath}/cadastro-disciplina.htm?idDisciplina=${disciplina.id}" data-toggle="tooltip" data-placement="left" title="Editar disciplina"><img src="${pageContext.request.contextPath}/resources/img/Write.png"/></a></td>
                         <td style="width: 1px; padding: 9px 1px;">
-                            <a class="tooltip-class" data-toggle="tooltip" data-placement="right" href="${pageContext.request.contextPath}/disciplina-remover.htm?idDisciplinaRemover=${disciplina.id}" title="Remover disciplina">
+                            <a class="tooltip-class" data-toggle="tooltip" data-placement="right" href="${pageContext.request.contextPath}/disciplina-remover.htm?idDisciplinaRemover=${disciplina.id}"  title="Remover disciplina">
                                 <img src="${pageContext.request.contextPath}/resources/img/Cancel.png" />
                             </a>
                         </td>

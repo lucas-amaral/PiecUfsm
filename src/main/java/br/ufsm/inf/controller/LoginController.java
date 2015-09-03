@@ -45,7 +45,7 @@ public class LoginController {
     public String efetuaLogin(ModelMap model, HttpSession session, @ModelAttribute("usuario") Usuario usuario) {
 //        usuario = autenticaLdap(usuario, model);
         usuario = cadastroService.getUsuario(usuario.getLogin());
-        if(usuario != null) {
+        if(usuario != null && usuario.getAtivo()) {
             session.setAttribute("usuarioLogado", usuario);
             if (usuario.getTipo().equals(Usuario.TIPO_ALUNO)) {
                 if (usuario.getPiec() != null) {
@@ -56,10 +56,12 @@ public class LoginController {
             } else {
                 return "redirect:solicitacoes.htm";
             }
-        } else {
+        } else if (usuario == null) {
             model.addAttribute("erro", "Login e/ou senha não confere");
-            return "login";
+        } else {
+            model.addAttribute("erro", "Seu usuário encontra-se desativado, por favor, entre em contato com a administração para mais informações.");
         }
+        return "login";
     }
 
     @RequestMapping("logout.htm")

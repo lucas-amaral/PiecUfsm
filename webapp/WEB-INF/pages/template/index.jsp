@@ -77,7 +77,7 @@
                                 <li><a href="instituicoes.htm"><img src="${pageContext.request.contextPath}/resources/img/home.gif"/> Instituições</a></li>
                             </c:otherwise>
                         </c:choose>
-                        <c:if test="${not empty sessionScope.usuarioLogado.piec or sessionScope.usuarioLogado.tipo ne 'Aluno'}">
+                        <c:if test="${sessionScope.usuarioLogado.ativo and (not empty sessionScope.usuarioLogado.piec or sessionScope.usuarioLogado.tipo ne 'Aluno')}">
                             <li><a href="blocos.htm"><img src="${pageContext.request.contextPath}/resources/img/bloco.gif"/> Sugestões</a></li>
                         </c:if>
                         <li><a href="logout.htm"><img src="${pageContext.request.contextPath}/resources/img/cancelar.gif"/> Sair</a></li>
