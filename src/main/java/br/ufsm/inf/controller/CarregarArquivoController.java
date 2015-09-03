@@ -97,10 +97,8 @@ public class CarregarArquivoController {
         Map<String, Object> parametro = new HashMap<String, Object>();
         Piec piec = cadastroService.getPiec(Long.valueOf(httpServletRequest.getParameter("idPiec")));
         parametro.put("idPiec", piec.getId());
-        FileInputStream ufsmLogo = new FileInputStream(httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/ufsm_logo.png");
-        parametro.put("ufsm_logo", ufsmLogo);
-        FileInputStream infLogo = new FileInputStream(httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/inf_logo.png");
-        parametro.put("inf_logo", infLogo);
+        parametro.put("ufsm_logo", httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/ufsm_logo.png");
+        parametro.put("inf_logo", httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/inf_logo.png");
         JasperReport report = JasperCompileManager.compileReport(httpServletRequest.getSession().getServletContext().getRealPath("/") + "/WEB-INF/Piec.Jrxml");
         JasperPrint print = JasperFillManager.fillReport(report, parametro, cadastroService.getDao().getConnection());
         httpServletRequest.getSession().setAttribute(ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, print);
