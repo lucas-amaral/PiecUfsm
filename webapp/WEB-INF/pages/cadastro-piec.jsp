@@ -18,7 +18,7 @@
                         <input class="form-control" disabled="disabled" value="${piec.aluno.matricula}" style="width: auto;"/>
                     </td>
                     <td style="vertical-align: bottom; white-space: nowrap;">
-                        <label style="display: block;">Gerar pdf</label>
+                        <label style="display: block;">PDF</label>
                         <a class="tooltip-class" href="#"><img src="${pageContext.request.contextPath}/resources/img/Document2.png" data-toggle="tooltip" data-placement="left" title="Visualizar em pdf" onclick="window.open('gerar-pdf.htm?idPiec=${piec.id}');"/></a>
                     </td>
                 </tr>
