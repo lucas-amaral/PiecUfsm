@@ -1,6 +1,7 @@
 package br.ufsm.inf.controller;
 
 import br.ufsm.inf.model.ArquivoTemporario;
+import br.ufsm.inf.model.Piec;
 import br.ufsm.inf.service.CadastroService;
 //import net.sf.jasperreports.engine.*;
 //import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -94,13 +95,14 @@ public class CarregarArquivoController {
     @RequestMapping("/gerar-pdf.htm")
     public void gerar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws SQLException, ClassNotFoundException, JRException, DocumentException, IOException {
         Map<String, Object> parametro = new HashMap<String, Object>();
-        parametro.put("idPiec", Long.valueOf(httpServletRequest.getParameter("idPiec")));
+        Piec piec = cadastroService.getPiec(Long.valueOf(httpServletRequest.getParameter("idPiec")));
+        parametro.put("idPiec", piec.getId());
         JasperReport report = JasperCompileManager.compileReport(httpServletRequest.getSession().getServletContext().getRealPath("/") + "/WEB-INF/Piec.Jrxml");
         JasperPrint print = JasperFillManager.fillReport(report, parametro, cadastroService.getDao().getConnection());
         httpServletRequest.getSession().setAttribute(ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, print);
         OutputStream out = httpServletResponse.getOutputStream();
         httpServletResponse.setContentType("application/pdf");
-        httpServletResponse.setHeader("Content-Disposition","inline; filename=\"piec.pdf\"");
+        httpServletResponse.setHeader("Content-Disposition","inline; filename=\"piec_"+ piec.getAluno().getLogin() +".pdf\"");
         JRPdfExporter pdfExporter = new JRPdfExporter();
         pdfExporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
         pdfExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, out);
