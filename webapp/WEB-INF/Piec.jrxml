@@ -26,6 +26,8 @@
 	<parameter name="idPiec" class="java.lang.String">
 		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ufsm_logo" class="java.lang.String"/>
+	<parameter name="inf_logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select  u.nome, u.matricula, p.perfil, concat(d.codigo, ' - ', d.nome) as "disciplina", d.carga_horaria, concat(i.sigla, ' - ', pd.curso_ofertante) as "curso", pd.semestre_ano_realizacao, p.parecer_colegiado, p.parecer_relator
 from piec p, piec_disciplina pd, disciplina d, instituicao i, usuario u where p.id = pd.id_piec and d.id = pd.id_disciplina and d.id_instituicao = i.id and p.id_usuario = u.id and p.id = $P{idPiec};]]>
@@ -70,11 +72,11 @@ Plano Individual de Estudos Complementares
 			</staticText>
 			<image>
 				<reportElement x="30" y="0" width="153" height="79" uuid="58ca1293-cdf9-496a-b0e1-2d99fa833869"/>
-				<imageExpression class="java.io.InputStream"><![CDATA[$P{ufsm_logo}]]></imageExpression>
+				<imageExpression><![CDATA[$P{ufsm_logo}]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="416" y="0" width="139" height="69" uuid="58da63fe-433d-4196-9531-39eeb295a01a"/>
-				<imageExpression class="java.io.InputStream"><![CDATA[$P{inf_logo}]]></imageExpression>
+				<imageExpression><![CDATA[$P{inf_logo}]]></imageExpression>
 			</image>
 		</band>
 	</title>
