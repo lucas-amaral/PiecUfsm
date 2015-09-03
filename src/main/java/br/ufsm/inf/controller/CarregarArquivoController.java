@@ -2,6 +2,14 @@ package br.ufsm.inf.controller;
 
 import br.ufsm.inf.model.ArquivoTemporario;
 import br.ufsm.inf.service.CadastroService;
+//import net.sf.jasperreports.engine.*;
+//import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
+import net.sf.jasperreports.j2ee.servlets.ImageServlet;
+import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +19,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -78,5 +89,22 @@ public class CarregarArquivoController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping("/gerar-pdf.htm")
+    public void gerar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws SQLException, ClassNotFoundException, JRException, DocumentException, IOException {
+        Map<String, Object> parametro = new HashMap<String, Object>();
+        parametro.put("idPiec", Long.valueOf(httpServletRequest.getParameter("idPiec")));
+        JasperReport report = JasperCompileManager.compileReport(httpServletRequest.getSession().getServletContext().getRealPath("/") + "/WEB-INF/Piec.Jrxml");
+        JasperPrint print = JasperFillManager.fillReport(report, parametro, cadastroService.getDao().getConnection());
+        httpServletRequest.getSession().setAttribute(ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, print);
+        OutputStream out = httpServletResponse.getOutputStream();
+        httpServletResponse.setContentType("application/pdf");
+        httpServletResponse.setHeader("Content-Disposition","inline; filename=\"piec.pdf\"");
+        JRPdfExporter pdfExporter = new JRPdfExporter();
+        pdfExporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+        pdfExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, out);
+        pdfExporter.exportReport();
+
     }
 }

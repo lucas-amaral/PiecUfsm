@@ -45,6 +45,7 @@
                                 <c:otherwise><img class="tooltip-class" src="${pageContext.request.contextPath}/resources/img//Cancel.png" data-toggle="tooltip" data-placement="left" title="Não finalizado"/></c:otherwise>
                             </c:choose>
                         </td>
+                        <td style="width: 1px; padding: 9px 1px;"><a class="tooltip-class" href="#" data-toggle="tooltip" data-placement="right" title="Visualizar pdf" onclick="window.open('gerar-pdf.htm?idPiec=${piec.id}');"\><img src="${pageContext.request.contextPath}/resources/img//Search.png"/></a></td>
                         <td style="width: 1px; padding: 9px 1px;"><a class="tooltip-class" href="${pageContext.request.contextPath}/cadastro-piec.htm?idPiec=${piec.id}" data-toggle="tooltip" data-placement="right" title="Editar piec"><img src="${pageContext.request.contextPath}/resources/img//Write.png"/></a></td>
                     </tr>
                 </c:forEach>

@@ -33,6 +33,7 @@ public class Piec {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="id_piec")
+    @OrderColumn(name = "disciplina.codigo")
     public Set<PiecDisciplina> getPiecDisciplinas() {
         return piecDisciplinas;
     }
