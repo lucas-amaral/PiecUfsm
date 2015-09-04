@@ -2,7 +2,6 @@ package br.ufsm.inf.model;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
@@ -18,37 +17,36 @@ public class DisciplinaTeste {
 
     @Before
     public void setUp() throws Exception {
-        webDriver = new FirefoxDriver();
-        //todo: È necess·rio fazer login?
-        url = "http://www.megatecnologia-si.com.br/piec/";
-        webDriver.get(url);
-        webDriver.findElement(By.id("login")).sendKeys("colegiado");
-        webDriver.findElement(By.cssSelector("button.btn.btn-default")).click();
+        url = "http://www.megatecnologia-si.com.br/piec";
+        webDriver = LoginTeste.loginSucesso();
         webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
     @Test
     public void cadastrarDisciplinaSucesso() {
-        webDriver.get(url + "cadastro-disciplina.htm");
+        webDriver.get(url + "/cadastro-disciplina.htm");
         webDriver.findElement(By.id("codigo")).sendKeys("ELC9999"); //input
         webDriver.findElement(By.id("nome")).sendKeys("Teste de Disciplina"); //input
         Select cargaHoraria = new Select(webDriver.findElement(By.id("cargaHoraria"))); //select
         cargaHoraria.selectByVisibleText("60");
         webDriver.findElement(By.id("ativa1")).click(); //checkbox
-        //todo: alterar para buscar uma instituiÁ„o cadastrada no banco de dados
+        //todo: alterar para buscar uma institui√ß√£o cadastrada no banco de dados
         Select instituicao = new Select(webDriver.findElement(By.id("idInstituicao")));
         instituicao.selectByVisibleText("UFSM - Universidade Federal de Santa Maria");
         webDriver.findElement(By.id("preAprovada1")).click();
         webDriver.findElement(By.id("salvar")).click();
         assertEquals("Sucesso!", webDriver.findElement(By.cssSelector("h4")).getText());
+        webDriver.findElement(By.id("salvar")).click();
+        assertEquals("Sucesso!", webDriver.findElement(By.cssSelector("h4")).getText());
+        excluirDisciplinaSucesso();
     }
 
-    //@Test
+    @Test
     public void cadastrarDisciplinaErro() {
         webDriver.get(url + "/cadastro-disciplina.htm");
-        webDriver.findElement(By.id("codigo")).sendKeys("ELC139"); //ProgramaÁ„o paralela
+        webDriver.findElement(By.id("codigo")).sendKeys("ELC139"); //Programa√ß√£o paralela
         webDriver.findElement(By.id("salvar")).click();
-//        assertEquals("CÛdigo j· cadastrado em outra disciplina.", webDriver.findElement(By.id("disciplina.errors")).getText());
+        assertEquals("C√≥digo j√° cadastrado em outra disciplina.", webDriver.findElement(By.id("disciplina.errors")).getText());
     }
 
 //    @Test
@@ -56,10 +54,9 @@ public class DisciplinaTeste {
 //
 //    }
 //
-//    @Test
-//    public void excluirDisciplinaSucesso() {
-//
-//    }
+    public void excluirDisciplinaSucesso() {
+        webDriver.findElement(By.cssSelector("input.btn.btn-danger")).click(); //Excluir
+    }
 
 
     @After
