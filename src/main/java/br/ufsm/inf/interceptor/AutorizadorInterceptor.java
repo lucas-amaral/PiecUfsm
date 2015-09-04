@@ -23,6 +23,7 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
         urisAluno.add("cadastro-disciplina-piec-remover.htm");
         urisAluno.add("cadastro-piec-arquivo-remover.htm");
         urisAluno.add("carregar-arquivo.htm");
+        urisAluno.add("gerar-pdf.htm");
     }
 
 
