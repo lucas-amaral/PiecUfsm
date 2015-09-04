@@ -83,6 +83,7 @@
         <copy todir="${build.webapp.dir}/WEB-INF/lib">
             <fileset dir="${lib.dir}">
                 <exclude name="servlet-api.jar"/>
+                <exclude name="slf4j-api-1.7.6.jar"/>
             </fileset>
         </copy>
         <touch file="${build.webapp.dir}/WEB-INF/web.xml"/>
