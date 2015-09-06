@@ -253,4 +253,8 @@ public class CadastroService {
     public Boolean existeMatricula(Usuario usuario) {
         return !dao.consulta("select u from usuario u where matricula = "+ usuario.getMatricula() +" and id !=" + usuario.getId()).isEmpty();
     }
+
+    public Arquivo arquivoJasper() {
+        return (Arquivo) dao.consulta("select a from arquivo a where nome = 'Piec.jrxml' order by 1 desc").iterator().next();
+    }
 }

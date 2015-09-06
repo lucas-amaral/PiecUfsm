@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Piec" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="22916253-c808-4cd6-b7a8-137a87b4a074">
 	<property name="ireport.zoom" value="1.2100000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="10"/>
+	<property name="ireport.y" value="364"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -237,11 +237,11 @@ Plano Individual de Estudos Complementares
 	<lastPageFooter>
 		<band height="228">
 			<line>
-				<reportElement key="line-1" x="179" y="9" width="192" height="1" uuid="17491971-173c-418d-a1ea-a2ca709c710c"/>
+				<reportElement key="line-1" x="179" y="6" width="192" height="1" uuid="17491971-173c-418d-a1ea-a2ca709c710c"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-11" x="211" y="10" width="123" height="15" uuid="fdebb225-e50e-4b18-b4a2-b8527a74febb"/>
-				<textElement>
+				<reportElement key="staticText-11" x="179" y="7" width="192" height="15" uuid="fdebb225-e50e-4b18-b4a2-b8527a74febb"/>
+				<textElement textAlignment="Center">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Assinatura do(a) Aluno(a)]]></text>
@@ -268,7 +268,7 @@ Plano Individual de Estudos Complementares
 				<text><![CDATA[PARECER DO RELATOR DO COLEGIADO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-11" x="28" y="116" width="497" height="15" uuid="97c8071a-0d30-45d4-ae18-a78b45e965bd"/>
+				<reportElement key="staticText-11" x="28" y="119" width="497" height="15" uuid="97c8071a-0d30-45d4-ae18-a78b45e965bd"/>
 				<box leftPadding="2">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -280,7 +280,7 @@ Plano Individual de Estudos Complementares
 				<text><![CDATA[PARECER DO COLEGIADO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement key="textField-26" x="28" y="131" width="497" height="47" uuid="ce065c33-df82-496e-ac06-ae1f2742e6b3"/>
+				<reportElement key="textField-26" x="28" y="134" width="497" height="47" uuid="ce065c33-df82-496e-ac06-ae1f2742e6b3"/>
 				<box leftPadding="2">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -289,20 +289,20 @@ Plano Individual de Estudos Complementares
 				<textFieldExpression><![CDATA[$F{parecer_colegiado}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-1" x="179" y="97" width="192" height="1" uuid="76006415-dc9c-4968-9438-5db2aab5f5dc"/>
+				<reportElement key="line-1" x="179" y="100" width="192" height="1" uuid="76006415-dc9c-4968-9438-5db2aab5f5dc"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-11" x="213" y="97" width="123" height="15" uuid="29d2e4f3-ac03-4a05-ac5b-6056d0f28b13"/>
+				<reportElement key="staticText-11" x="179" y="100" width="192" height="15" uuid="29d2e4f3-ac03-4a05-ac5b-6056d0f28b13"/>
 				<textElement textAlignment="Center">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Relator(a) do Colegiado]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-1" x="181" y="198" width="192" height="1" uuid="0d8f660a-10a5-4b24-a276-e7a978bf57d1"/>
+				<reportElement key="line-1" x="181" y="201" width="192" height="1" uuid="0d8f660a-10a5-4b24-a276-e7a978bf57d1"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-11" x="215" y="198" width="123" height="15" uuid="fccfc84f-f339-4a56-8c98-f7159c700689"/>
+				<reportElement key="staticText-11" x="183" y="201" width="190" height="15" uuid="fccfc84f-f339-4a56-8c98-f7159c700689"/>
 				<textElement textAlignment="Center">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>

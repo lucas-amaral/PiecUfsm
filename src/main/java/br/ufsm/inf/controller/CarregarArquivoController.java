@@ -1,5 +1,6 @@
 package br.ufsm.inf.controller;
 
+import br.ufsm.inf.model.Arquivo;
 import br.ufsm.inf.model.ArquivoTemporario;
 import br.ufsm.inf.model.Piec;
 import br.ufsm.inf.service.CadastroService;
@@ -99,7 +100,8 @@ public class CarregarArquivoController {
         parametro.put("idPiec", piec.getId());
         parametro.put("ufsm_logo", httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/ufsm_logo.png");
         parametro.put("inf_logo", httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/inf_logo.png");
-        JasperReport report = JasperCompileManager.compileReport(httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/Piec.Jrxml");
+        Arquivo arquivoJasper = cadastroService.arquivoJasper();
+        JasperReport report = JasperCompileManager.compileReport(arquivoJasper.getArquivo().getBinaryStream());
         JasperPrint print = JasperFillManager.fillReport(report, parametro, cadastroService.getDao().getConnection());
         httpServletRequest.getSession().setAttribute(ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, print);
         OutputStream out = httpServletResponse.getOutputStream();
