@@ -32,7 +32,7 @@
                     <th>Aluno</th>
                     <th style="text-align: right;">Carga horária aprovada</th>
                     <th style="text-align: center;">Aprovado</th>
-                    <th>&nbsp;</th>
+                    <th colspan="2">&nbsp;</th>
                 </tr>
                 <c:forEach items="${piecs}" var="piec">
                     <tr>
