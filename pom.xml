@@ -235,11 +235,9 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
-
                     <nonFilteredFileExtensions>
                         <nonFilteredFileExtension>jasper</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
-
                 </configuration>
             </plugin>
         </plugins>
