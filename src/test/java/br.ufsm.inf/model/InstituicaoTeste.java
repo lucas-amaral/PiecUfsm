@@ -27,7 +27,7 @@ public class InstituicaoTeste {
     @Before
     public void setUp() throws Exception {
         url = "http://www.megatecnologia-si.com.br/piec";
-        webDriver = LoginTeste.loginSucesso();
+        webDriver = LoginTeste.login(url);
         webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 

@@ -1,11 +1,15 @@
 package br.ufsm.inf.model;
 
+import br.ufsm.inf.Teste;
+
 import javax.persistence.*;
 
 /**
  * Created by Lucas on 27/09/2014.
  */
 @Entity(name = "disciplina")
+@Teste(getCampo = "salvar", getValor = "Sucesso!", getAssert = true, getIdentificadorAssert = "css",
+        getCampoAssert = "h4", getUrl = "/cadastro-disciplina.htm")
 public class Disciplina  implements Comparable<Disciplina>{
     private Long id;
     private String codigo;
@@ -26,6 +30,7 @@ public class Disciplina  implements Comparable<Disciplina>{
         this.instituicao = instituicao;
     }
 
+    @Teste(getTipo = "checkbox", getCampo = "ativa1")
     public Boolean getAtiva() {
         return ativa == null || ativa;
     }
@@ -35,6 +40,7 @@ public class Disciplina  implements Comparable<Disciplina>{
     }
 
     @Column(name = "pre_aprovada")
+    @Teste(getTipo = "checkbox", getCampo = "preAprovada1")
     public Boolean getPreAprovada() {
         return preAprovada != null && preAprovada;
     }
@@ -44,6 +50,7 @@ public class Disciplina  implements Comparable<Disciplina>{
     }
 
     @Column(name = "carga_horaria")
+    @Teste(getTipo = "select", getCampo = "cargaHoraria", getValor = "60")
     public Integer getCargaHoraria() {
         return cargaHoraria;
     }
@@ -52,6 +59,7 @@ public class Disciplina  implements Comparable<Disciplina>{
         this.cargaHoraria = cargaHoraria;
     }
 
+    @Teste(getCampo = "nome", getValor = "Disciplina teste")
     public String getNome() {
         return nome;
     }
@@ -71,6 +79,7 @@ public class Disciplina  implements Comparable<Disciplina>{
     }
 
     @Column(nullable = false)
+    @Teste(getCampo =  "codigo", getValor = "TEST123456")
     public String getCodigo() {
         return codigo;
     }
@@ -80,6 +89,7 @@ public class Disciplina  implements Comparable<Disciplina>{
     }
 
     @Transient
+    @Teste(getTipo = "select", getCampo = "idInstituicao", getValor = "UFSM - Universidade Federal de Santa Maria")
     public Long getIdInstituicao() {
         return idInstituicao;
     }
