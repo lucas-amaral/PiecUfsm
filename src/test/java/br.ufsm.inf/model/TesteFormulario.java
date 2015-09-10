@@ -49,7 +49,7 @@ public class TesteFormulario {
                 if (testeClasse.getAssert()) {
                     WebElement webElementAssert = encontraCampo(testeClasse.getIdentificadorAssert(), testeClasse.getCampoAssert());
                     assertEquals(testeClasse.getValor(), webElementAssert.getText());
-                    System.out.println("Formul·rio " + testeClasse.getUrl() + " testado!");
+                    System.out.println("Formul√°rio " + testeClasse.getUrl() + " testado!");
                 }
             }
         }
@@ -63,21 +63,30 @@ public class TesteFormulario {
     public void setValorCampo(Teste teste) {
         WebElement webElement = encontraCampo(teste.getIdentificador(), teste.getCampo());
         if (webElement != null) {
-            if (!teste.getUrl().equals("")) {
-                webDriver.get(TestePropriedades.urlSistema + teste.getUrl());
+            executaAcoes(teste, webElement);
+        }
+    }
+
+    private void executaAcoes(Teste teste, WebElement webElement) {
+        if (!teste.getUrl().equals("")) {
+            webDriver.get(TestePropriedades.urlSistema + teste.getUrl());
+        }
+        if (teste.limpar()) {
+            webElement.clear();
+        }
+        if (teste.isSelect()) {
+            Select select = new Select(webElement);
+            if (!teste.getValor().equals("")) {
+                select.selectByVisibleText(teste.getValor());
             }
-            if (teste.getTipo().equals(TestePropriedades.TIPO_INPUT)) {
-                if (!teste.getValor().equals("")) {
-                    webElement.sendKeys(teste.getValor());
-                }
-            } else if (teste.getTipo().equals(TestePropriedades.TIPO_SELECT)) {
-                Select select = new Select(webElement);
-                if (!teste.getValor().equals("")) {
-                    select.selectByVisibleText(teste.getValor());
-                }
-            } else if (teste.getTipo().equals(TestePropriedades.TIPO_CHECKBOX)) {
-                webElement.click();
-            }
+        } else if (!teste.getValor().equals("")) {
+            webElement.sendKeys(teste.getValor());
+        }
+        if (teste.click()) {
+            webElement.click();
+        }
+        if (teste.submit()) {
+            webElement.submit();
         }
     }
 
@@ -105,11 +114,11 @@ public class TesteFormulario {
         try {
             if (no.isDirectory()) {
                 File[] nos = no.listFiles();
-                for (File noAtual :  nos) {
+                for (File noAtual : nos) {
                     if (noAtual.isDirectory() || !noAtual.getName().endsWith(".java")) {
                         continue;
                     }
-                    String className = TestePropriedades.pacoteModelo + noAtual.getName().substring(0, noAtual.getName().length() - 5);
+                    String className = noAtual.getAbsolutePath().substring(0, noAtual.getAbsolutePath().length() - 5).replace("\\", ".").split("java.")[1]
                     Class classeAtual = Class.forName(className);
                     Teste teste = TestePropriedades.teste(classeAtual);
                     if (teste != null) {

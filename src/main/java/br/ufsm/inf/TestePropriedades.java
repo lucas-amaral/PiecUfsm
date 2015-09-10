@@ -19,7 +19,6 @@ public class TestePropriedades {
 
 
     public static final String diretorioModelo = "D:\\Projetos\\1.7\\PiecUfsm\\src\\main\\java\\br\\ufsm\\inf\\model";
-    public static final String pacoteModelo = "br.ufsm.inf.model.";
 
     public static final String urlSistema = "http://localhost";
 

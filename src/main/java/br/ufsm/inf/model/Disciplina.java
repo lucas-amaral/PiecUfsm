@@ -30,7 +30,7 @@ public class Disciplina  implements Comparable<Disciplina>{
         this.instituicao = instituicao;
     }
 
-    @Teste(getTipo = "checkbox", getCampo = "ativa1")
+    @Teste(getCampo = "ativa1", click = true)
     public Boolean getAtiva() {
         return ativa == null || ativa;
     }
@@ -40,7 +40,7 @@ public class Disciplina  implements Comparable<Disciplina>{
     }
 
     @Column(name = "pre_aprovada")
-    @Teste(getTipo = "checkbox", getCampo = "preAprovada1")
+    @Teste(getCampo = "preAprovada1", click = true)
     public Boolean getPreAprovada() {
         return preAprovada != null && preAprovada;
     }
@@ -50,7 +50,7 @@ public class Disciplina  implements Comparable<Disciplina>{
     }
 
     @Column(name = "carga_horaria")
-    @Teste(getTipo = "select", getCampo = "cargaHoraria", getValor = "60")
+    @Teste(getCampo = "cargaHoraria", getValor = "60", isSelect = true)
     public Integer getCargaHoraria() {
         return cargaHoraria;
     }
@@ -89,7 +89,7 @@ public class Disciplina  implements Comparable<Disciplina>{
     }
 
     @Transient
-    @Teste(getTipo = "select", getCampo = "idInstituicao", getValor = "UFSM - Universidade Federal de Santa Maria")
+    @Teste(getCampo = "idInstituicao", getValor = "UFSM - Universidade Federal de Santa Maria", isSelect = true)
     public Long getIdInstituicao() {
         return idInstituicao;
     }

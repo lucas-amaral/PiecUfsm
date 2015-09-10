@@ -9,11 +9,18 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface Teste {
-    String getTipo() default "input";
-    String getValor() default "";
     String getUrl() default "";
-    String getIdentificador() default "id";
-    String getCampo() default "";
+
+    //findElement
+    String getCampo() default ""; //campo html do formulário
+    String getIdentificador() default "id"; //Informar se deve buscar um id, name, class ou css
+
+    boolean isSelect() default false;
+
+    String getValor() default ""; //utilizado como sendKeys e selectText
+    boolean click() default false;
+    boolean submit() default false;
+    boolean limpar() default false;
 
     boolean getAssert() default false;
     String getIdentificadorAssert() default "id";
