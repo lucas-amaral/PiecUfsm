@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by Lucas on 07/09/2015.
@@ -40,18 +40,11 @@ public class TesteFormulario {
             for(Method metodo: classe.getDeclaredMethods()) {
                 Teste teste = TestePropriedades.teste(metodo);
                 if (teste != null) {
-                    setValorCampo(teste);
+                    executaTeste(teste);
                 }
             }
-            WebElement webElementClasse = encontraCampo(testeClasse.getIdentificador(), testeClasse.getCampo());
-            if (webElementClasse != null) {
-                webElementClasse.click();
-                if (testeClasse.getAssert()) {
-                    WebElement webElementAssert = encontraCampo(testeClasse.getIdentificadorAssert(), testeClasse.getCampoAssert());
-                    assertEquals(testeClasse.getValor(), webElementAssert.getText());
-                    System.out.println("Formulário " + testeClasse.getUrl() + " testado!");
-                }
-            }
+            executaTeste(testeClasse);
+            System.out.println("Formulário " + testeClasse.getUrl() + " testado!");
         }
     }
 
@@ -60,8 +53,8 @@ public class TesteFormulario {
         webDriver.quit();
     }
 
-    public void setValorCampo(Teste teste) {
-        WebElement webElement = encontraCampo(teste.getIdentificador(), teste.getCampo());
+    public void executaTeste(Teste teste) {
+        WebElement webElement = getEncontraCampo(teste.getIdentificador(), teste.getCampo());
         if (webElement != null) {
             executaAcoes(teste, webElement);
         }
@@ -88,9 +81,66 @@ public class TesteFormulario {
         if (teste.submit()) {
             webElement.submit();
         }
+        if (!teste.getCampoAssert().equals("")) {
+            executaComparacao(teste);
+        }
     }
 
-    private WebElement encontraCampo(String identificador, String campo) {
+    private void executaComparacao(Teste teste) {
+        WebElement webElementAssert = getEncontraCampo(teste.getIdentificadorAssert(), teste.getCampoAssert());
+        if (teste.getTipoAssert().equals(TestePropriedades.TIPO_ASSERT_IGUAL) && !teste.getValorEsperadoAssert().equals("")) {
+            assertEquals(teste.getValorEsperadoAssert(), getValorPropriedadeCampo(webElementAssert, teste));
+        } else if (teste.getTipoAssert().equals(TestePropriedades.TIPO_ASSERT_DIFERENTE) && !teste.getValorEsperadoAssert().equals("")) {
+            assertNotEquals(teste.getValorEsperadoAssert(), getValorPropriedadeCampo(webElementAssert, teste));
+        } else if (teste.getTipoAssert().equals(TestePropriedades.TIPO_ASSERT_COLECAO_IGUAL) && !teste.getValorEsperadoAssert().equals("")) {
+            //todo: preciso de um objeto e não string
+        } else if (teste.getTipoAssert().equals(TestePropriedades.TIPO_ASSERT_VERDADEIRO)) {
+            if (!teste.getValorEsperadoAssert().equals("")) {
+                assertTrue(teste.getValorEsperadoAssert(), (Boolean) getValorPropriedadeCampo(webElementAssert, teste));
+            } else {
+                assertTrue((Boolean) getValorPropriedadeCampo(webElementAssert, teste));
+            }
+        } else if (teste.getTipoAssert().equals(TestePropriedades.TIPO_ASSERT_FALSO)) {
+            if (!teste.getValorEsperadoAssert().equals("")) {
+                assertFalse(teste.getValorEsperadoAssert(), (Boolean) getValorPropriedadeCampo(webElementAssert, teste));
+            } else {
+                assertFalse((Boolean) getValorPropriedadeCampo(webElementAssert, teste));
+            }
+        } else if (teste.getTipoAssert().equals(TestePropriedades.TIPO_ASSERT_NULO)) {
+            if (!teste.getValorEsperadoAssert().equals("")) {
+                assertNull(teste.getValorEsperadoAssert(), getValorPropriedadeCampo(webElementAssert, teste));
+            } else {
+                assertNull(getValorPropriedadeCampo(webElementAssert, teste));
+            }
+        } else if (teste.getTipoAssert().equals(TestePropriedades.TIPO_ASSERT_NAO_NULO)) {
+            if (!teste.getValorEsperadoAssert().equals("")) {
+                assertNotNull(teste.getValorEsperadoAssert(), getValorPropriedadeCampo(webElementAssert, teste));
+            } else {
+                assertNotNull(getValorPropriedadeCampo(webElementAssert, teste));
+            }
+        }
+    }
+
+    private Object getValorPropriedadeCampo(WebElement webElement, Teste teste) {
+        if (teste.getAtributoCampoComparacaoAssert().equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_TEXTO)) {
+            return webElement.getText();
+        } else if (teste.getAtributoCampoComparacaoAssert().equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_NOME_TAG)) {
+            return webElement.getTagName();
+        } else if (teste.getAtributoCampoComparacaoAssert().equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_ATRIBUTO)) {
+            return null;
+        } else if (teste.getAtributoCampoComparacaoAssert().equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_VALOR_CSS)) {
+            return null;
+        } else if (teste.getAtributoCampoComparacaoAssert().equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_CAMPO_EXIBIDO)) {
+            return webElement.isDisplayed();
+        } else if (teste.getAtributoCampoComparacaoAssert().equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_CAMPO_SELECIONADO)) {
+            return webElement.isSelected();
+        } else if (teste.getAtributoCampoComparacaoAssert().equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_CAMPO_HABILITADO)) {
+            return webElement.isEnabled();
+        }
+        return null;
+    }
+
+    private WebElement getEncontraCampo(String identificador, String campo) {
         if (identificador.equals(TestePropriedades.IDENTIFICADOR_ID)) {
             return webDriver.findElement(By.id(campo));
         } else if (identificador.equals(TestePropriedades.IDENTIFICADOR_NOME)) {
@@ -118,7 +168,7 @@ public class TesteFormulario {
                     if (noAtual.isDirectory() || !noAtual.getName().endsWith(".java")) {
                         continue;
                     }
-                    String className = noAtual.getAbsolutePath().substring(0, noAtual.getAbsolutePath().length() - 5).replace("\\", ".").split("java.")[1]
+                    String className = noAtual.getAbsolutePath().substring(0, noAtual.getAbsolutePath().length() - 5).replace("\\", ".").split("java.")[1];
                     Class classeAtual = Class.forName(className);
                     Teste teste = TestePropriedades.teste(classeAtual);
                     if (teste != null) {

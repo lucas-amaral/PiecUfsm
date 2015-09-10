@@ -22,7 +22,9 @@ public @interface Teste {
     boolean submit() default false;
     boolean limpar() default false;
 
-    boolean getAssert() default false;
-    String getIdentificadorAssert() default "id";
+    String getTipoAssert() default "igual";
     String getCampoAssert() default "";
+    String getIdentificadorAssert() default "id";
+    String getValorEsperadoAssert() default "";
+    String getAtributoCampoComparacaoAssert() default "texto";
 }

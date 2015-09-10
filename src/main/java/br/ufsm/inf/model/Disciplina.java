@@ -1,6 +1,7 @@
 package br.ufsm.inf.model;
 
 import br.ufsm.inf.Teste;
+import br.ufsm.inf.TestePropriedades;
 
 import javax.persistence.*;
 
@@ -8,8 +9,8 @@ import javax.persistence.*;
  * Created by Lucas on 27/09/2014.
  */
 @Entity(name = "disciplina")
-@Teste(getCampo = "salvar", getValor = "Sucesso!", getAssert = true, getIdentificadorAssert = "css",
-        getCampoAssert = "h4", getUrl = "/cadastro-disciplina.htm")
+@Teste(getCampo = "salvar", getUrl = "/cadastro-disciplina.htm"
+        ,getIdentificadorAssert = TestePropriedades.IDENTIFICADOR_CSS, getCampoAssert = "h4", getValorEsperadoAssert = "Sucesso!")
 public class Disciplina  implements Comparable<Disciplina>{
     private Long id;
     private String codigo;
