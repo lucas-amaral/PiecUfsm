@@ -1,5 +1,8 @@
 package br.ufsm.inf.model;
 
+import br.ufsm.inf.Teste;
+import br.ufsm.inf.TestePropriedades;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -8,6 +11,8 @@ import java.util.LinkedHashSet;
  * Created by Lucas on 01/11/2014.
  */
 @Entity(name = "instituicao")
+@Teste(getCampo = "input.btn.btn-success", getIdentificador = TestePropriedades.IDENTIFICADOR_CSS, getUrl = "/cadastro-instituicao.htm"
+    ,getIdentificadorAssert = TestePropriedades.IDENTIFICADOR_CSS, getCampoAssert = "h4", getValorEsperadoAssert = "Sucesso!")
 public class Instituicao {
     private Long id;
     private String nome;
@@ -55,6 +60,7 @@ public class Instituicao {
         this.id = id;
     }
 
+    @Teste(getCampo = "nome", getValor = "Instituição teste")
     public String getNome() {
         return nome;
     }
@@ -63,6 +69,7 @@ public class Instituicao {
         this.nome = nome;
     }
 
+    @Teste(getCampo = "sigla", getValor = "TEST789")
     public String getSigla() {
         return sigla;
     }
@@ -71,6 +78,7 @@ public class Instituicao {
         this.sigla = sigla;
     }
 
+    @Teste(getCampo = "estado", getValor = "Piauí", isSelect = true)
     public String getEstado() {
         return estado;
     }
