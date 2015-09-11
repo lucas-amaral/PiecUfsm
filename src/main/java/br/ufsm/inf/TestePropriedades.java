@@ -29,9 +29,9 @@ public class TestePropriedades {
     public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_EXIBIDO = "campo exibido";
 
 
-    public static final String diretorioModelo = "D:\\Projetos\\1.7\\PiecUfsm\\src\\main\\java\\br\\ufsm\\inf\\model";
+    public static final String diretorioModelo = "E:\\Dados\\Projetos\\1.7\\PiecUfsm\\src\\main\\java\\br\\ufsm\\inf\\model";
 
-    public static final String urlSistema = "http://granito.mega:8080/piec";
+    public static final String urlSistema = "http://www.megatecnologia-si.com.br/piec";
 
     public static Teste teste(Class classe) {
         return (Teste) anotacao(classe);

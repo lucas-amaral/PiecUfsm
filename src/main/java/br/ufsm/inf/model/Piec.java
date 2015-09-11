@@ -1,5 +1,7 @@
 package br.ufsm.inf.model;
 
+import br.ufsm.inf.Teste;
+import br.ufsm.inf.TestePropriedades;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.util.*;
  * Created by Lucas on 27/09/2014.
  */
 @Entity(name = "piec")
+@Teste(getCampo = "salvar", click = true, fazerLogin = true, getLogin = "lamaral",
+        getIdentificadorAssert = TestePropriedades.IDENTIFICADOR_CSS, getCampoAssert = "h4", getValorEsperadoAssert = "Sucesso!")
 public class Piec {
     private Long id;
     private Usuario aluno;

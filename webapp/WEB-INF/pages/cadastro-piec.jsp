@@ -305,16 +305,16 @@
             </table>
         </fieldset>
         <c:if test="${piec.solicitarAvalacao && sessionScope.usuarioLogado.membroColegiado}">
-            <input class="btn btn-danger" type="submit" name="acao" value="Retornar para ajustes do aluno"/>
+            <input class="btn btn-danger" type="submit" name="acao" id="ajustes" value="Retornar para ajustes do aluno"/>
         </c:if>
         <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id and not empty piec.piecDisciplinas and not piec.solicitarAvalacao}">
-            <input class="btn btn-success" type="submit" name="acao" value="Solicitar avaliação do plano ao colegiado do curso"/>
+            <input class="btn btn-success" type="submit" name="acao" id="solicitar" value="Solicitar avaliação do plano ao colegiado do curso"/>
         </c:if>
         <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id or sessionScope.usuarioLogado.membroColegiado and not piec.solicitarAvalacao}">
-            <input class="btn btn-success" type="submit" name="acao" value="Salvar" style="float: right;"/>
+            <input class="btn btn-success" type="submit" name="acao" id="salvar" value="Salvar" style="float: right;"/>
         </c:if>
         <c:if test="${sessionScope.usuarioLogado.membroColegiado and piec.solicitarAvalacao}">
-            <input class="btn btn-success" type="submit" name="acao" value="Aprovar" style="float: right;"/>
+            <input class="btn btn-success" type="submit" name="acao" id="aprovar" value="Aprovar" style="float: right;"/>
         </c:if>
     </form:form>
 </div>

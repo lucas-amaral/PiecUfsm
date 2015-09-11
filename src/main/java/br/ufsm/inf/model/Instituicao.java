@@ -11,7 +11,7 @@ import java.util.LinkedHashSet;
  * Created by Lucas on 01/11/2014.
  */
 @Entity(name = "instituicao")
-@Teste(getCampo = "input.btn.btn-success", getIdentificador = TestePropriedades.IDENTIFICADOR_CSS, getUrl = "/cadastro-instituicao.htm"
+@Teste(getCampo = "input.btn.btn-success", getIdentificador = TestePropriedades.IDENTIFICADOR_CSS, click = true, getUrl = "/cadastro-instituicao.htm"
     ,getIdentificadorAssert = TestePropriedades.IDENTIFICADOR_CSS, getCampoAssert = "h4", getValorEsperadoAssert = "Sucesso!")
 public class Instituicao {
     private Long id;

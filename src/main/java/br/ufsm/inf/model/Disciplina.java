@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by Lucas on 27/09/2014.
  */
 @Entity(name = "disciplina")
-@Teste(getCampo = "salvar", getUrl = "/cadastro-disciplina.htm"
+@Teste(getUrl = "/cadastro-disciplina.htm", getCampo = "salvar", click = true
         ,getIdentificadorAssert = TestePropriedades.IDENTIFICADOR_CSS, getCampoAssert = "h4", getValorEsperadoAssert = "Sucesso!")
 public class Disciplina  implements Comparable<Disciplina>{
     private Long id;

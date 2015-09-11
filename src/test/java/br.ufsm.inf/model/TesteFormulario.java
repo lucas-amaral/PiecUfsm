@@ -26,7 +26,7 @@ public class TesteFormulario {
 
     @Before
     public void setUp() throws Exception {
-        webDriver = LoginTeste.login(TestePropriedades.urlSistema);
+        webDriver = LoginTeste.login(TestePropriedades.urlSistema, "", "colegiado");
         webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
@@ -34,16 +34,19 @@ public class TesteFormulario {
     public void testaFormularios() {
         for (Class classe : getCarregaClasses()) {
             Teste testeClasse = TestePropriedades.teste(classe);
+            if (testeClasse.fazerLogin()) {
+                LoginTeste.login(TestePropriedades.urlSistema, testeClasse.getSenha(), testeClasse.getLogin());
+            }
             if (!testeClasse.getUrl().equals("")) {
                 webDriver.get(TestePropriedades.urlSistema + testeClasse.getUrl());
             }
             for(Method metodo: classe.getDeclaredMethods()) {
                 Teste teste = TestePropriedades.teste(metodo);
                 if (teste != null) {
-                    executaTeste(teste);
+                    executaTeste(teste, true);
                 }
             }
-            executaTeste(testeClasse);
+            executaTeste(testeClasse, false);
             System.out.println("Formulário " + testeClasse.getUrl() + " testado!");
         }
     }
@@ -53,15 +56,15 @@ public class TesteFormulario {
         webDriver.quit();
     }
 
-    public void executaTeste(Teste teste) {
+    public void executaTeste(Teste teste, Boolean submeteUrl) {
         WebElement webElement = getEncontraCampo(teste.getIdentificador(), teste.getCampo());
         if (webElement != null) {
-            executaAcoes(teste, webElement);
+            executaAcoes(teste, webElement, submeteUrl);
         }
     }
 
-    private void executaAcoes(Teste teste, WebElement webElement) {
-        if (!teste.getUrl().equals("")) {
+    private void executaAcoes(Teste teste, WebElement webElement, Boolean submeteUrl) {
+        if (!teste.getUrl().equals("") && submeteUrl) {
             webDriver.get(TestePropriedades.urlSistema + teste.getUrl());
         }
         if (teste.limpar()) {

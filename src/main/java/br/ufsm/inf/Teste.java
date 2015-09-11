@@ -27,4 +27,8 @@ public @interface Teste {
     String getIdentificadorAssert() default "id";
     String getValorEsperadoAssert() default "";
     String getAtributoCampoComparacaoAssert() default "texto";
+
+    boolean fazerLogin() default false;
+    String getLogin() default "colegiado";
+    String getSenha()default "";
 }
