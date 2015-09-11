@@ -11,6 +11,7 @@ public class TestePropriedades {
     public static final String IDENTIFICADOR_NOME = "nome";
     public static final String IDENTIFICADOR_NOME_CLASSE = "nome da classe";
     public static final String IDENTIFICADOR_CSS = "css";
+    public static final String IDENTIFICADOR_XPATH = "xpath";
 
     public static final String TIPO_ASSERT_IGUAL = "igual";
     public static final String TIPO_ASSERT_DIFERENTE = "diferente";
@@ -29,7 +30,7 @@ public class TestePropriedades {
     public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_EXIBIDO = "campo exibido";
 
 
-    public static final String diretorioModelo = "E:\\Dados\\Projetos\\1.7\\PiecUfsm\\src\\main\\java\\br\\ufsm\\inf\\model";
+    public static final String diretorioModelo = "E:\\Pessoal\\Comp\\PiecUfsm\\src\\main\\java\\br\\ufsm\\inf\\model";
 
     public static final String urlSistema = "http://www.megatecnologia-si.com.br/piec";
 

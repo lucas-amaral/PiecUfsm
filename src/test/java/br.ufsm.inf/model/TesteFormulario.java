@@ -35,7 +35,7 @@ public class TesteFormulario {
         for (Class classe : getCarregaClasses()) {
             Teste testeClasse = TestePropriedades.teste(classe);
             if (testeClasse.fazerLogin()) {
-                LoginTeste.login(TestePropriedades.urlSistema, testeClasse.getSenha(), testeClasse.getLogin());
+                LoginTeste.login(TestePropriedades.urlSistema, testeClasse.getSenha(), testeClasse.getLogin(), webDriver);
             }
             if (!testeClasse.getUrl().equals("")) {
                 webDriver.get(TestePropriedades.urlSistema + testeClasse.getUrl());
@@ -47,7 +47,7 @@ public class TesteFormulario {
                 }
             }
             executaTeste(testeClasse, false);
-            System.out.println("Formulário " + testeClasse.getUrl() + " testado!");
+            System.out.println("Formulário da classe " + classe.getName() + " testado!");
         }
     }
 
@@ -152,6 +152,8 @@ public class TesteFormulario {
             return webDriver.findElement(By.className(campo));
         } else if (identificador.equals(TestePropriedades.IDENTIFICADOR_CSS)) {
             return webDriver.findElement(By.cssSelector(campo));
+        } else if (identificador.equals(TestePropriedades.IDENTIFICADOR_XPATH)) {
+            return webDriver.findElement(By.xpath(campo));
         }
         return null;
     }

@@ -11,8 +11,9 @@ import java.util.*;
  * Created by Lucas on 27/09/2014.
  */
 @Entity(name = "piec")
-@Teste(getCampo = "salvar", click = true, fazerLogin = true, getLogin = "lamaral",
-        getIdentificadorAssert = TestePropriedades.IDENTIFICADOR_CSS, getCampoAssert = "h4", getValorEsperadoAssert = "Sucesso!")
+@Teste(getCampo = "(//input[@name='acao'])[2]", getIdentificador = TestePropriedades.IDENTIFICADOR_XPATH, click = true,
+        fazerLogin = true, getLogin = "lamaral",
+            getIdentificadorAssert = TestePropriedades.IDENTIFICADOR_CSS, getCampoAssert = "h4", getValorEsperadoAssert = "Sucesso!")
 public class Piec {
     private Long id;
     private Usuario aluno;
@@ -93,6 +94,7 @@ public class Piec {
     }
 
     @Column(columnDefinition = "TEXT")
+    @Teste(getCampo = "perfil", getValor = "Perfil teste", limpar = true)
     public String getPerfil() {
         return perfil;
     }
