@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
 public class TesteFormulario {
     private WebDriver webDriver;
 
-    @Dado("^abrir navegador $")
+    @Dado("^abrir navegador$")
     public void abrir_navegador() {
         webDriver = new FirefoxDriver();
     }
