@@ -86,6 +86,26 @@ public class TesteFormulario {
         assertEquals(valorEsperado, getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
+    @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) é verdadeiro$")
+    public void comparar_se_verdadeiro(String atributo, String campo, String identificador) {
+        assertTrue((Boolean) getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
+    }
+
+    @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) é falso")
+    public void comparar_se_falso(String atributo, String campo, String identificador) {
+        assertFalse((Boolean) getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
+    }
+
+    @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) é nulo$")
+    public void comparar_se_nulo(String atributo, String campo, String identificador) {
+        assertNull(getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
+    }
+
+    @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) não está nulo$")
+    public void comparar_se_nao_nulo(String atributo, String campo, String identificador) {
+        assertNotNull(getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
+    }
+
     @Before
     public void setUp() throws Exception {
         webDriver = LoginTeste.login(TestePropriedades.urlSistema, "", "colegiado");
@@ -201,6 +221,8 @@ public class TesteFormulario {
             return webElement.isSelected();
         } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_CAMPO_HABILITADO)) {
             return webElement.isEnabled();
+        } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_URL)) {
+            return webDriver.getCurrentUrl();
         }
         return null;
     }

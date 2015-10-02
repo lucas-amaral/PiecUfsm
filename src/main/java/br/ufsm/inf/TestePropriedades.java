@@ -28,7 +28,7 @@ public class TestePropriedades {
     public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_HABILITADO = "campo habilitado";
     public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_SELECIONADO = "campo selecionado";
     public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_EXIBIDO = "campo exibido";
-
+    public static final String ATRIBUTO_COMPARACAO_URL = "url";
 
     public static final String diretorioModelo = "E:\\Pessoal\\Comp\\PiecUfsm\\src\\main\\java\\br\\ufsm\\inf\\model";
 
