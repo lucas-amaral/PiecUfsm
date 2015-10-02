@@ -108,6 +108,11 @@ public class TesteFormulario {
         assertNotNull(getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
+    @Entao("^fecha navegador$")
+    public void fecha_navegador() {
+        webDriver.quit();
+    }
+
     /* Inicio das regras Selenium*/
 
     @Before
@@ -159,5 +164,4 @@ public class TesteFormulario {
         }
         return null;
     }
-
 }
