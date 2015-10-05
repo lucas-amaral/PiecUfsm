@@ -1,4 +1,4 @@
-package br.ufsm.inf.model;
+package br.ufsm.inf.selenium;
 
 import org.junit.After;
 import org.junit.Before;

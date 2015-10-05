@@ -1,4 +1,4 @@
-package br.ufsm.inf.model;
+package br.ufsm.inf.selenium;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

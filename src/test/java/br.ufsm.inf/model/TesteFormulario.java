@@ -1,17 +1,14 @@
 package br.ufsm.inf.model;
 
 import br.ufsm.inf.TestePropriedades;
-import cucumber.api.PendingException;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.E;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
@@ -23,22 +20,32 @@ import static org.junit.Assert.*;
  * Created by Lucas on 07/09/2015.
  */
 public class TesteFormulario {
-    private WebDriver webDriver;
+    private final WebDriver webDriver = new FirefoxDriver();
+    private boolean acceptNextAlert = true;
+    private StringBuffer verificationErrors = new StringBuffer();
 
-    /* Inicio das regras Cucumber*/
+    @Before
+    public void setUp() throws Exception {
+        webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    }
 
     @Dado("^abrir navegador$")
-    public void abrir_navegador() {
-        webDriver = new FirefoxDriver();
+    public void abrirNavegador() {
+//        webDriver = new FirefoxDriver();
+    }
+
+    @Dado("^atribuir timeout navegador (\\d+)$")
+    public void setTimeoutNavegador(int timeout) {
+        webDriver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
     }
 
     @Dado("^acessar endereco (.*)$")
-    public void acessar_endereco(String url) {
+    public void acessarEndereco(String url) {
         webDriver.get(TestePropriedades.urlSistema + url);
     }
 
     @Quando("^selecionar opcao (.*) no campo (.*) buscando pelo (.*)$")
-    public void selecionar_opcao_campo(String opcao, String campo, String identificador) {
+    public void selecionarOpcaoCampo(String opcao, String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
             Select select = new Select(webElement);
@@ -47,7 +54,7 @@ public class TesteFormulario {
     }
 
     @E("^limpe o campo (.*) buscando pelo (.*)$")
-    public void limpar_campo(String campo, String identificador) {
+    public void limparCampo(String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
             webElement.clear();
@@ -55,7 +62,7 @@ public class TesteFormulario {
     }
 
     @E("^preencho campo (.*) com o valor (.*) buscando pelo (.*)$")
-    public void preencher_campo(String campo, String valor, String identificador) {
+    public void preencherCampo(String campo, String valor, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
             webElement.sendKeys(valor);
@@ -63,7 +70,7 @@ public class TesteFormulario {
     }
 
     @E("^clicar no elemento (.*) buscando pelo (.*)$")
-    public void clicar_elemento(String campo, String identificador) {
+    public void clicarElemento(String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
             webElement.click();
@@ -71,7 +78,7 @@ public class TesteFormulario {
     }
 
     @E("^submeter elemento (.*) buscando pelo (.*)$")
-    public void submeter_elemento(String campo, String identificador) {
+    public void submeterElemento(String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
             webElement.submit();
@@ -79,46 +86,38 @@ public class TesteFormulario {
     }
 
     @Entao("^comparar igualdade entre valor esperado (.*) com atributo (.*) do elemento (.*) buscando pelo (.*)$")
-    public void comparar_igualdade(String valorEsperado, String atributo, String campo, String identificador) {
+    public void compararIgualdade(String valorEsperado, String atributo, String campo, String identificador) {
         assertEquals(valorEsperado, getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
     @Entao("^comparar diferença entre valor esperado (.*) com atributo (.*) do elemento (.*) buscando pelo (.*) $")
-    public void comparar_diferenca(String valorEsperado, String atributo, String campo, String identificador) {
+    public void compararDiferenca(String valorEsperado, String atributo, String campo, String identificador) {
         assertEquals(valorEsperado, getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
     @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) é verdadeiro$")
-    public void comparar_se_verdadeiro(String atributo, String campo, String identificador) {
+    public void compararSeVerdadeiro(String atributo, String campo, String identificador) {
         assertTrue((Boolean) getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
     @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) é falso")
-    public void comparar_se_falso(String atributo, String campo, String identificador) {
+    public void compararSeFalso(String atributo, String campo, String identificador) {
         assertFalse((Boolean) getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
     @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) é nulo$")
-    public void comparar_se_nulo(String atributo, String campo, String identificador) {
+    public void compararSeNulo(String atributo, String campo, String identificador) {
         assertNull(getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
     @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) não está nulo$")
-    public void comparar_se_nao_nulo(String atributo, String campo, String identificador) {
+    public void compararSeNaoNulo(String atributo, String campo, String identificador) {
         assertNotNull(getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
     @Entao("^fecha navegador$")
-    public void fecha_navegador() {
+    public void fechaNavegador() {
         webDriver.quit();
-    }
-
-    /* Inicio das regras Selenium*/
-
-    @Before
-    public void setUp() throws Exception {
-        webDriver = LoginTeste.login(TestePropriedades.urlSistema, "", "colegiado");
-        webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
     @Test
@@ -127,6 +126,43 @@ public class TesteFormulario {
     @After
     public void tearDown() throws Exception {
         webDriver.quit();
+        String verificationErrorString = verificationErrors.toString();
+        if (!"".equals(verificationErrorString)) {
+            fail(verificationErrorString);
+        }
+    }
+
+    private boolean isElementPresent(By by) {
+        try {
+            webDriver.findElement(by);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    private boolean isAlertPresent() {
+        try {
+            webDriver.switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
+    }
+
+    private String closeAlertAndGetItsText() {
+        try {
+            Alert alert = webDriver.switchTo().alert();
+            String alertText = alert.getText();
+            if (acceptNextAlert) {
+                alert.accept();
+            } else {
+                alert.dismiss();
+            }
+            return alertText;
+        } finally {
+            acceptNextAlert = true;
+        }
     }
 
     private Object getValorPropriedadeCampo(WebElement webElement, String atributo) {
