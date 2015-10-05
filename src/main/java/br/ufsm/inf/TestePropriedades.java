@@ -2,6 +2,7 @@ package br.ufsm.inf;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 
 /**
  * Created by Lucas on 08/09/2015.
@@ -30,8 +31,6 @@ public class TestePropriedades {
     public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_EXIBIDO = "campo exibido";
     public static final String ATRIBUTO_COMPARACAO_URL = "url";
 
-    public static final String diretorioModelo = "E:\\Pessoal\\Comp\\PiecUfsm\\src\\main\\java\\br\\ufsm\\inf\\model";
-
     public static final String urlSistema = "http://www.megatecnologia-si.com.br/piec";
 
     public static Teste teste(Class classe) {
@@ -56,6 +55,45 @@ public class TestePropriedades {
             if (Teste.class.isAssignableFrom(annotation.getClass())) {
                 return annotation;
             }
+        }
+        return null;
+    }
+
+    public static Method getMetodo(Class classe, String propriedade) throws NoSuchMethodException {
+        propriedade = propriedade.replaceAll("_", "");
+        Method retorno;
+        for (int pontos = propriedade.indexOf(".") ; pontos > -1 ; pontos = propriedade.indexOf(".")) {
+            String propriedadeMetodo = propriedade.substring(0, pontos);
+            propriedade = propriedade.substring(pontos + 1);
+            retorno = getMetodo(classe, propriedadeMetodo);
+            classe = retorno.getReturnType();
+            if (retorno.getGenericReturnType() instanceof ParameterizedType) {
+                ParameterizedType tipoMetodo = (ParameterizedType) retorno.getGenericReturnType();
+                if (tipoMetodo.getActualTypeArguments().length == 1 && tipoMetodo.getActualTypeArguments()[0].toString().contains("silas")) {
+                    classe = (Class) tipoMetodo.getActualTypeArguments()[0];
+                } else if (tipoMetodo.getActualTypeArguments().length == 2 && tipoMetodo.getActualTypeArguments()[1].toString().contains("silas")) {
+                    classe = (Class) tipoMetodo.getActualTypeArguments()[1];
+                }
+            }
+        }
+        if (propriedade.contains("[")) {
+            String nomeProp = propriedade.substring(0, propriedade.indexOf("["));
+            retorno = classe.getMethod("get" + nomeProp.substring(0, 1).toUpperCase() + nomeProp.substring(1));
+        } else {
+            retorno = classe.getMethod("get" + propriedade.substring(0, 1).toUpperCase() + propriedade.substring(1));
+        }
+        return retorno;
+    }
+
+    public static String getValorPadraoMetodo(Class classe, String propriedade) {
+        try {
+            Method metodo = getMetodo(classe, propriedade);
+            Teste anotacao = teste(metodo);
+            if (anotacao != null) {
+                return anotacao.getValor();
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
         return null;
     }
