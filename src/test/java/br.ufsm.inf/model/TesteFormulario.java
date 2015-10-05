@@ -1,5 +1,6 @@
 package br.ufsm.inf.model;
 
+import br.ufsm.inf.Teste;
 import br.ufsm.inf.TestePropriedades;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -12,6 +13,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -20,11 +23,11 @@ import static org.junit.Assert.*;
  * Created by Lucas on 07/09/2015.
  */
 public class TesteFormulario {
-    private final WebDriver webDriver = new FirefoxDriver();
+    private final SharedDriver webDriver = new SharedDriver();
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
-    @Before
+    //@Before
     public void setUp() throws Exception {
         webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
@@ -115,16 +118,12 @@ public class TesteFormulario {
         assertNotNull(getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
-    @Entao("^fecha navegador$")
-    public void fechaNavegador() {
-        webDriver.quit();
-    }
-
     @Test
     public void testaFormularios() {}
 
-    @After
-    public void tearDown() throws Exception {
+    //@After
+    @Entao("^fecha navegador$")
+    public void fechaNavegador() throws Exception {
         webDriver.quit();
         String verificationErrorString = verificationErrors.toString();
         if (!"".equals(verificationErrorString)) {
@@ -197,6 +196,45 @@ public class TesteFormulario {
             return webDriver.findElement(By.cssSelector(campo));
         } else if (identificador.equals(TestePropriedades.IDENTIFICADOR_XPATH)) {
             return webDriver.findElement(By.xpath(campo));
+        }
+        return null;
+    }
+
+    public static Method getMetodo(Class classe, String propriedade) throws NoSuchMethodException {
+        propriedade = propriedade.replaceAll("_", "");
+        Method retorno;
+        for (int pontos = propriedade.indexOf(".") ; pontos > -1 ; pontos = propriedade.indexOf(".")) {
+            String propriedadeMetodo = propriedade.substring(0, pontos);
+            propriedade = propriedade.substring(pontos + 1);
+            retorno = getMetodo(classe, propriedadeMetodo);
+            classe = retorno.getReturnType();
+            if (retorno.getGenericReturnType() instanceof ParameterizedType) {
+                ParameterizedType tipoMetodo = (ParameterizedType) retorno.getGenericReturnType();
+                if (tipoMetodo.getActualTypeArguments().length == 1 && tipoMetodo.getActualTypeArguments()[0].toString().contains("silas")) {
+                    classe = (Class) tipoMetodo.getActualTypeArguments()[0];
+                } else if (tipoMetodo.getActualTypeArguments().length == 2 && tipoMetodo.getActualTypeArguments()[1].toString().contains("silas")) {
+                    classe = (Class) tipoMetodo.getActualTypeArguments()[1];
+                }
+            }
+        }
+        if (propriedade.contains("[")) {
+            String nomeProp = propriedade.substring(0, propriedade.indexOf("["));
+            retorno = classe.getMethod("get" + nomeProp.substring(0, 1).toUpperCase() + nomeProp.substring(1));
+        } else {
+            retorno = classe.getMethod("get" + propriedade.substring(0, 1).toUpperCase() + propriedade.substring(1));
+        }
+        return retorno;
+    }
+
+    public static String getValorPadraoMetodo(Class classe, String propriedade) {
+        try {
+            Method metodo = getMetodo(classe, propriedade);
+            Teste anotacao = TestePropriedades.teste(metodo);
+            if (anotacao != null) {
+                return anotacao.getValor();
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
         return null;
     }

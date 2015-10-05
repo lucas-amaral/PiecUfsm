@@ -17,7 +17,7 @@ Funcionalidade: Testes software
     E preencho campo idDisciplinaAdicionar com o valor ELC1051 - Computação Gráfica Avançada (60h) buscando pelo id
     E preencho campo piecDisciplinaAdicionar.cursoOfertante com o valor Ciência da Computação buscando pelo id
     E preencho campo piecDisciplinaAdicionar.semestreAnoRealizacao com o valor II/2011 buscando pelo id
-    E clicar no elemento //fieldset[@id='inserir_disciplina']/table/tbody/tr[21]/td[4]/a/img buscando pelo xpath
+    E clicar no elemento adicionarPiecDisciplina buscando pelo id
     Entao comparar igualdade entre valor esperado Sucesso! com atributo texto do elemento h4 buscando pelo css
 
   Cenario: Adicionar disciplina erro
@@ -28,5 +28,5 @@ Funcionalidade: Testes software
     E preencho campo idDisciplinaAdicionar com o valor ELC1051 - Computação Gráfica Avançada (60h) buscando pelo id
     E preencho campo piecDisciplinaAdicionar.cursoOfertante com o valor Ciência da Computação buscando pelo id
     E preencho campo piecDisciplinaAdicionar.semestreAnoRealizacao com o valor II/2011 buscando pelo id
-    E clicar no elemento //fieldset[@id='inserir_disciplina']/table/tbody/tr[21]/td[4]/a/img buscando pelo xpath
+    E clicar no elemento adicionarPiecDisciplina buscando pelo id
     Entao comparar igualdade entre valor esperado Sucesso! com atributo texto do elemento h4 buscando pelo css

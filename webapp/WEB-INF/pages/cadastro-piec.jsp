@@ -234,7 +234,7 @@
                                 <form:input path="piecDisciplinaAdicionar.semestreAnoRealizacao" cssClass="form-control" cssStyle="width: auto;" placeholder="Semestre/Ano"/>
                             </td>
                             <td style="text-align: right;" colspan="2">
-                                <a href="#" class="tooltip-class" data-toggle="tooltip" data-placement="right" title="Adicionar disciplina no PIEC" onclick="adicionarItem('PiecDisciplina', 'piec');">
+                                <a href="#" id="adicionarPiecDisciplina" class="tooltip-class" data-toggle="tooltip" data-placement="right" title="Adicionar disciplina no PIEC" onclick="adicionarItem('PiecDisciplina', 'piec');">
                                     <img src="${pageContext.request.contextPath}/resources/img/Plus.png"/>
                                 </a>
                             </td>
