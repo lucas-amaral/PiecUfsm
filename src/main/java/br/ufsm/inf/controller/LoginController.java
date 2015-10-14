@@ -43,8 +43,7 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String efetuaLogin(ModelMap model, HttpSession session, @ModelAttribute("usuario") Usuario usuario) {
-//        usuario = autenticaLdap(usuario, model);
-        usuario = cadastroService.getUsuario(usuario.getLogin());
+        usuario = autenticaLdap(usuario, model);
         if(usuario != null && usuario.getAtivo()) {
             session.setAttribute("usuarioLogado", usuario);
             if (usuario.getTipo().equals(Usuario.TIPO_ALUNO)) {
