@@ -59,7 +59,7 @@
                                     <input type="file" name="arquivoHistoricoEscolar" id="arquivoHistoricoEscolar" style="margin: 0; display: inline-block;"/>
                                 </td>
                                 <td style="white-space: nowrap !important; text-align: right;" colspan="2">
-                                    <a href="#" onclick="adicionarItem('Arquivo', 'piec');">
+                                    <a href="#" onclick="adicionarItem('Arquivo', 'piec');" id="adicionaPiecDisciplina">
                                         <img src="${pageContext.request.contextPath}/resources/img/Plus.png"/>
                                     </a>
                                 </td>

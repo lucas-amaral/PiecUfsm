@@ -33,7 +33,7 @@ public class TesteFormulario {
         webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
-    @Dado("^abrir navegador$")
+    @Dado("^abro o navegador$")
     public void abrirNavegador() {
 //        webDriver = new FirefoxDriver();
     }
@@ -43,12 +43,12 @@ public class TesteFormulario {
         webDriver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
     }
 
-    @Dado("^acessar endereco (.*)$")
+    @Dado("^acesso o endereco (.*)$")
     public void acessarEndereco(String url) {
         webDriver.get(TestePropriedades.urlSistema + url);
     }
 
-    @Quando("^selecionar opcao (.*) no campo (.*) buscando pelo (.*)$")
+    @Quando("^seleciono a opcao (.*) no campo (.*) buscando pelo (.*)$")
     public void selecionarOpcaoCampo(String opcao, String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
@@ -57,7 +57,7 @@ public class TesteFormulario {
         }
     }
 
-    @E("^limpe o campo (.*) buscando pelo (.*)$")
+    @E("^limpo o campo (.*) buscando pelo (.*)$")
     public void limparCampo(String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
@@ -65,7 +65,7 @@ public class TesteFormulario {
         }
     }
 
-    @E("^preencho campo (.*) com o valor (.*) buscando pelo (.*)$")
+    @E("^preencho o campo (.*) com o valor (.*) buscando pelo (.*)$")
     public void preencherCampo(String campo, String valor, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
@@ -73,7 +73,7 @@ public class TesteFormulario {
         }
     }
 
-    @E("^clicar no elemento (.*) buscando pelo (.*)$")
+    @E("^clico no elemento (.*) buscando pelo (.*)$")
     public void clicarElemento(String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
@@ -81,7 +81,7 @@ public class TesteFormulario {
         }
     }
 
-    @E("^submeter elemento (.*) buscando pelo (.*)$")
+    @E("^submeto o elemento (.*) buscado pelo (.*)$")
     public void submeterElemento(String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
@@ -89,32 +89,32 @@ public class TesteFormulario {
         }
     }
 
-    @Entao("^comparar igualdade entre valor esperado (.*) com atributo (.*) do elemento (.*) buscando pelo (.*)$")
+    @Entao("^comparo a igualdade entre o valor esperado (.*) com atributo (.*) do elemento (.*) buscando pelo (.*)$")
     public void compararIgualdade(String valorEsperado, String atributo, String campo, String identificador) {
         assertEquals(valorEsperado, getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
-    @Entao("^comparar diferença entre valor esperado (.*) com atributo (.*) do elemento (.*) buscando pelo (.*) $")
+    @Entao("^comparo a diferença entre valor esperado (.*) com atributo (.*) do elemento (.*) buscando pelo (.*) $")
     public void compararDiferenca(String valorEsperado, String atributo, String campo, String identificador) {
         assertEquals(valorEsperado, getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
-    @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) é verdadeiro$")
+    @Entao("^verifico se atributo (.*) do elemento (.*) buscando pelo (.*) é verdadeiro$")
     public void compararSeVerdadeiro(String atributo, String campo, String identificador) {
         assertTrue((Boolean) getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
-    @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) é falso")
+    @Entao("^verifico se atributo (.*) do elemento (.*) buscando pelo (.*) é falso")
     public void compararSeFalso(String atributo, String campo, String identificador) {
         assertFalse((Boolean) getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
-    @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) é nulo$")
+    @Entao("^verifico se atributo (.*) do elemento (.*) buscando pelo (.*) é nulo$")
     public void compararSeNulo(String atributo, String campo, String identificador) {
         assertNull(getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
-    @Entao("^comparar se atributo (.*) do elemento (.*) buscando pelo (.*) não está nulo$")
+    @Entao("^verifico se atributo (.*) do elemento (.*) buscando pelo (.*) não está nulo$")
     public void compararSeNaoNulo(String atributo, String campo, String identificador) {
         assertNotNull(getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
