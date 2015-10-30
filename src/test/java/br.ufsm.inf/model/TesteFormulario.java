@@ -1,21 +1,14 @@
 package br.ufsm.inf.model;
 
-import br.ufsm.inf.Teste;
 import br.ufsm.inf.TestePropriedades;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.E;
 import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
 import org.junit.Test;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -25,8 +18,6 @@ import static org.junit.Assert.*;
  */
 public class TesteFormulario {
     private final SharedDriver webDriver = new SharedDriver();
-    private boolean acceptNextAlert = true;
-    private StringBuffer verificationErrors = new StringBuffer();
 
     //@Before
     public void setUp() throws Exception {
@@ -126,43 +117,6 @@ public class TesteFormulario {
     @Entao("^fecha navegador$")
     public void fechaNavegador() throws Exception {
         webDriver.quit();
-        String verificationErrorString = verificationErrors.toString();
-        if (!"".equals(verificationErrorString)) {
-            fail(verificationErrorString);
-        }
-    }
-
-    private boolean isElementPresent(By by) {
-        try {
-            webDriver.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    private boolean isAlertPresent() {
-        try {
-            webDriver.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
-
-    private String closeAlertAndGetItsText() {
-        try {
-            Alert alert = webDriver.switchTo().alert();
-            String alertText = alert.getText();
-            if (acceptNextAlert) {
-                alert.accept();
-            } else {
-                alert.dismiss();
-            }
-            return alertText;
-        } finally {
-            acceptNextAlert = true;
-        }
     }
 
     private Object getValorPropriedadeCampo(WebElement webElement, String atributo) {

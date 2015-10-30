@@ -10,23 +10,26 @@ Funcionalidade: Ações executadas por um aluno do curso de Ciência da Computa�
     E clico no elemento button.btn.btn-default buscando pelo css
     Entao verifico se atributo nome tag do elemento id buscando pelo nome não está nulo
 
+  @aceitacao
   Cenario: Adicionar umas disciplina ao plano com sucesso.
     Dado seleciono a opcao ELC1051 - Computação Gráfica Avançada (60h) no campo idDisciplinaAdicionar buscando pelo id
-    E preencho o campo piecDisciplinaAdicionar.cursoOfertante com o valor Ciência da Computação buscando pelo id
+    Quando preencho o campo piecDisciplinaAdicionar.cursoOfertante com o valor Ciência da Computação buscando pelo id
     E preencho o campo piecDisciplinaAdicionar.semestreAnoRealizacao com o valor II/2011 buscando pelo id
     E clico no elemento adicionarPiecDisciplina buscando pelo id
     Entao comparo a igualdade entre o valor esperado Sucesso! com atributo texto do elemento h4 buscando pelo css
 
+  @rejeicao
   Cenario: Não permitir adicionar disciplina ao plano quando a mesma já está incluida.
     Dado seleciono a opcao ELC1051 - Computação Gráfica Avançada (60h) no campo idDisciplinaAdicionar buscando pelo id
-    E preencho o campo piecDisciplinaAdicionar.cursoOfertante com o valor Ciência da Computação buscando pelo id
+    Quando preencho o campo piecDisciplinaAdicionar.cursoOfertante com o valor Ciência da Computação buscando pelo id
     E preencho o campo piecDisciplinaAdicionar.semestreAnoRealizacao com o valor II/2011 buscando pelo id
     E clico no elemento adicionarPiecDisciplina buscando pelo id
     Entao comparo a igualdade entre o valor esperado Disciplina já inserida no plano. com atributo texto do elemento piec.errors buscando pelo id
 
+  @aceitacao
   Cenario: Adicionar uma disciplina de outra instituição não cadastrada previamente no sistema.
     Dado seleciono a opcao Adicionar outra disciplina no campo idDisciplinaAdicionar buscando pelo id
-    E preencho o campo piecDisciplinaAdicionar.cursoOfertante com o valor Sistemas de Informação buscando pelo id
+    Quando preencho o campo piecDisciplinaAdicionar.cursoOfertante com o valor Sistemas de Informação buscando pelo id
     E preencho o campo piecDisciplinaAdicionar.semestreAnoRealizacao com o valor II/2009 buscando pelo id
     E preencho o campo novaDisciplina.codigo com o valor INF12345 buscando pelo id
     E preencho o campo novaDisciplina.nome com o valor Administração na Computação buscando pelo id
@@ -41,16 +44,28 @@ Funcionalidade: Ações executadas por um aluno do curso de Ciência da Computa�
     E clico no elemento adicionarPiecDisciplina buscando pelo id
     Entao comparo a igualdade entre o valor esperado Sucesso! com atributo texto do elemento h4 buscando pelo css
 
-#  Cenario: Não permitir inserir disciplina com uma sigla já cadastrada
-#  Código já cadastrado em outra disciplina. Por favor, caso a mesma não conste na lista de possibilidades, entre em contato com a coordenação do curso.
+  @rejeicao
+  Delineacao do Cenario: 1 - Não permitir inserir no PIEC disciplina que não faça parte do curso, sem o preenchimento do campo relevância da integralização
+     2 - Não permitir cadastrar nova instituição com sigla já cadastrada
+     3 - Não permitir cadastrar nova disciplina sem sua respectiva sigla
+     4 - Não permitir cadastrar nova disciplina sem sua respectiva nome
+     5 - Não permitir inserir disciplina com uma sigla já cadastrada
+    Dado seleciono a opcao Adicionar outra disciplina no campo idDisciplinaAdicionar buscando pelo id
+    Quando preencho o campo novaDisciplina.codigo com o valor <codigoDis> buscando pelo id
+    E preencho o campo novaDisciplina.nome com o valor <nomeNovaDisciplina> buscando pelo id
+    E preencho o campo piecDisciplinaAdicionar.relevanciaIntegralizacao com o valor <relevancia> buscando pelo id
+    E seleciono a opcao Adicionar outra instituição no campo novaDisciplina.idInstituicao buscando pelo id
+    E seleciono a opcao 78 horas no campo novaDisciplina.cargaHoraria buscando pelo id
+    E preencho o campo novaInstituicao.nome com o valor Universidade Teste buscando pelo id
+    E preencho o campo novaInstituicao.sigla com o valor <siglaInst> buscando pelo id
+    E preencho o campo piecDisciplinaAdicionar.arquivoPlanoEnsino com o valor C:\\Users\\Lucas\\Desktop\\putty.exe buscando pelo id
+    E clico no elemento adicionarPiecDisciplina buscando pelo id
+    Entao comparo a igualdade entre o valor esperado <msgErro> com atributo texto do elemento piec.errors buscando pelo id
 
-#  Cenario: Não permitir cadastrar nova disciplina sem sua respectiva sigla e nome
-#  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "novaDisciplina.codigo", "field.required", "Preencha o campo código.");
-#  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "novaDisciplina.nome", "field.required", "Preencha o campo nome.");
-
-#  Cenario: Não permitir cadastrar nova instituição com sigla já cadastrada
-#  Sigla já cadastrada em outra instituição.
-
-#  Cenario: Não permitir inserir no PIEC disciplina que não faça parte do curso, sem o preenchimento do campo relevância da integralização
-#  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "piecDisciplinaAdicionar.relevanciaIntegralizacao", "field.required", "Preencha o campo relevância da integralização.");
-
+  Exemplos:
+    | codigoDis | nomeNovaDisciplina | relevancia | siglaInst | msgErro                                        |
+    | TESTE95   | Teste informática  |            | USC       | Preencha o campo relevância da integralização. |
+    | TESTE95   | Teste informática  | Teste 1    | UFSM      | Sigla já cadastrada em outra instituição.      |
+    |           | Teste informática  | Teste 2    | UFT       | Preencha o campo código.                       |
+    | TESTE98   |                    | Teste 3    | UFS       | Preencha o campo nome.                         |
+    | ELC1051   | Computação Gráfica | Teste 4    | UFAR      | Código já cadastrado em outra disciplina. Por favor, caso a mesma não conste na lista de possibilidades, entre em contato com a coordenação do curso.|

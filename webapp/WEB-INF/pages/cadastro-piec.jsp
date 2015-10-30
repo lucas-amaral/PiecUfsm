@@ -114,10 +114,10 @@
                                 ${piecDisciplina.semestreAnoRealizacao}<c:if test="${empty piecDisciplina.semestreAnoRealizacao}"> - </c:if>
                             </td>
                             <td style="width: 1px; text-align: right; padding: 9px 1px;"  <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id}">colspan="2" </c:if>>
-                                <a class="tooltip-class" href="${pageContext.request.contextPath}/cadastro-piec-disciplina.htm?idPiecDisciplina=${piecDisciplina.id}" data-toggle="tooltip" data-placement="left" title="Editar disciplina"><img src="${pageContext.request.contextPath}/resources/img/Write.png"/></a>
+                                <a class="tooltip-class" href="${pageContext.request.contextPath}/cadastro-piec-disciplina.htm?idPiecDisciplina=${piecDisciplina.id}" data-toggle="tooltip" data-placement="left" title="Editar disciplina"><img src="${pageContext.request.contextPath}/resources/img/Write.png"  id="editarPiecDisciplina_${piecDisciplina.id}"/></a>
                                 <c:if test="${(empty piecDisciplina.aprovada or piecDisciplina.aprovada) and sessionScope.usuarioLogado.id eq piec.aluno.id and not piec.solicitarAvalacao}">
                                     <a href="${pageContext.request.contextPath}/cadastro-disciplina-piec-remover.htm?idPiecDisciplinaRemover=${piecDisciplina.id}">
-                                        <img src="${pageContext.request.contextPath}/resources/img/Cancel.png" data-toggle="tooltip" data-placement="right" title="Remover disciplina" class="tooltip-class"/>
+                                        <img src="${pageContext.request.contextPath}/resources/img/Cancel.png" data-toggle="tooltip" data-placement="right" title="Remover disciplina" class="tooltip-class" id="removerPiecDisciplina_${piecDisciplina.id}"/>
                                     </a>
                                 </c:if>
                             </td>
@@ -187,10 +187,10 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <a href="${pageContext.request.contextPath}/cadastro-disciplina-piec-avaliar.htm?idPiecDisciplina=${piecDisciplina.id}&avaliacao=${true}" onclick="mudaImagemCampoBoolean(document.getElementById('avaliacao_${piecDisciplina.id}'), true, this, '${piecDisciplina.id}');">
-                                                        <button type="button" class="btn btn-success">Aprovar</button>
+                                                        <button type="button" class="btn btn-success" id="aprovarDisciplina">Aprovar</button>
                                                     </a>
                                                     <a href="${pageContext.request.contextPath}/cadastro-disciplina-piec-avaliar.htm?idPiecDisciplina=${piecDisciplina.id}&avaliacao=${false}" onclick="mudaImagemCampoBoolean(document.getElementById('avaliacao_${piecDisciplina.id}'), false, this, '${piecDisciplina.id}');">
-                                                        <button type="button" class="btn btn-danger">Negar</button>
+                                                        <button type="button" class="btn btn-danger" id="negarDisciplina">Negar</button>
                                                     </a>
                                                 </div>
                                             </div>
