@@ -7,7 +7,9 @@ import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Quando;
 import org.junit.Test;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +25,7 @@ public class Steps {
     public static final String IDENTIFICADOR_CSS = "css";
     public static final String IDENTIFICADOR_XPATH = "xpath";
     public static final String IDENTIFICADOR_TEXTO_DO_LINK = "Texto do link";
+    public static final String IDENTIFICADOR_NOME_TAG = "Nome tag";
 
     public static final String ATRIBUTO_COMPARACAO_ASSERT_TEXTO = "texto";
     public static final String ATRIBUTO_COMPARACAO_ASSERT_NOME_TAG = "nome tag";
@@ -96,6 +99,24 @@ public class Steps {
         }
     }
 
+    @E("^aguardo (\\d+) milisegundos para verificar se elemento (.*) buscando pelo (.*) esta presente$")
+    public void aguardarCampoExistente(Long tempo, String campo, String identificador) {
+        WebDriverWait webDriverWait = new WebDriverWait(webDriver, tempo);
+        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(getEncontra(identificador, campo)));
+    }
+
+    @E("^aguardo (\\d+) milisegundos para verificar se elemento (.*) buscando pelo (.*) esta visivel$")
+    public void aguardarCampoVisivel(Long tempo, String campo, String identificador) {
+        WebDriverWait webDriverWait = new WebDriverWait(webDriver, tempo);
+        webDriverWait.until(ExpectedConditions.visibilityOf(getEncontraCampo(identificador, campo)));
+    }
+
+    @E("^aguardo (\\d+) milisegundos para verificar se elemento (.*) buscando pelo (.*) desapareceu$")
+    public void aguardarCampoDesaparecer(Long tempo, String campo, String identificador) {
+        WebDriverWait webDriverWait = new WebDriverWait(webDriver, tempo);
+        webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(getEncontra(identificador, campo)));
+    }
+
     @Entao("^comparo a igualdade entre o valor esperado (.*) com atributo (.*) do elemento (.*) buscando pelo (.*)$")
     public void compararIgualdade(String valorEsperado, String atributo, String campo, String identificador) {
         assertEquals(valorEsperado, getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
@@ -103,7 +124,7 @@ public class Steps {
 
     @Entao("^comparo a diferença entre valor esperado (.*) com atributo (.*) do elemento (.*) buscando pelo (.*) $")
     public void compararDiferenca(String valorEsperado, String atributo, String campo, String identificador) {
-        assertEquals(valorEsperado, getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
+        assertNotEquals(valorEsperado, getValorPropriedadeCampo(getEncontraCampo(identificador, campo), atributo));
     }
 
     @Entao("^verifico se atributo (.*) do elemento (.*) buscando pelo (.*) é verdadeiro$")
@@ -157,18 +178,24 @@ public class Steps {
     }
 
     private WebElement getEncontraCampo(String identificador, String campo) {
+        return webDriver.findElement(getEncontra(identificador, campo));
+    }
+
+    public By getEncontra(String identificador, String campo) {
         if (identificador.equals(Steps.IDENTIFICADOR_ID)) {
-            return webDriver.findElement(By.id(campo));
+            return By.id(campo);
         } else if (identificador.equals(Steps.IDENTIFICADOR_NOME)) {
-            return webDriver.findElement(By.name(campo));
+            return By.name(campo);
         } else if (identificador.equals(Steps.IDENTIFICADOR_NOME_CLASSE)) {
-            return webDriver.findElement(By.className(campo));
+            return By.className(campo);
         } else if (identificador.equals(Steps.IDENTIFICADOR_CSS)) {
-            return webDriver.findElement(By.cssSelector(campo));
+            return By.cssSelector(campo);
         } else if (identificador.equals(Steps.IDENTIFICADOR_XPATH)) {
-            return webDriver.findElement(By.xpath(campo));
+            return By.xpath(campo);
         } else if (identificador.equals(Steps.IDENTIFICADOR_TEXTO_DO_LINK)) {
-            return webDriver.findElement(By.linkText(campo));
+            return By.linkText(campo);
+        } else if (identificador.equals(Steps.IDENTIFICADOR_NOME_TAG)) {
+            return By.tagName(campo);
         }
         return null;
     }
