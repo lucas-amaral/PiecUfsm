@@ -58,45 +58,75 @@ public class Steps {
         webDriver.get(TestePropriedades.urlSistema + url);
     }
 
+    @Quando("^seleciono a opcao (.*) no campo (.*)$")
+    public WebElement selecionarOpcaoCampo(String opcao, String campo) {
+        return selecionarOpcaoCampo(opcao, campo, IDENTIFICADOR_ID);
+    }
+
     @Quando("^seleciono a opcao (.*) no campo (.*) buscando pelo (.*)$")
-    public void selecionarOpcaoCampo(String opcao, String campo, String identificador) {
+    public WebElement selecionarOpcaoCampo(String opcao, String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
             Select select = new Select(webElement);
             select.selectByVisibleText(opcao);
         }
+        return webElement;
+    }
+
+    @E("^limpo o campo (.*)$")
+    public WebElement limparCampo(String campo) {
+        return limparCampo(campo, IDENTIFICADOR_ID);
     }
 
     @E("^limpo o campo (.*) buscando pelo (.*)$")
-    public void limparCampo(String campo, String identificador) {
+    public WebElement limparCampo(String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
             webElement.clear();
         }
+        return webElement;
+    }
+
+    @E("^preencho o campo (.*) com o valor (.*)$")
+    public WebElement preencherCampo(String campo, String valor) {
+        return preencherCampo(campo, valor, IDENTIFICADOR_ID);
     }
 
     @E("^preencho o campo (.*) com o valor (.*) buscando pelo (.*)$")
-    public void preencherCampo(String campo, String valor, String identificador) {
+    public WebElement preencherCampo(String campo, String valor, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
             webElement.sendKeys(valor);
         }
+        return webElement;
+    }
+
+    @E("^clico no elemento (.*)$")
+    public WebElement clicarElemento(String campo) {
+        return clicarElemento(campo, IDENTIFICADOR_ID);
     }
 
     @E("^clico no elemento (.*) buscando pelo (.*)$")
-    public void clicarElemento(String campo, String identificador) {
+    public WebElement clicarElemento(String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
             webElement.click();
         }
+        return webElement;
+    }
+
+    @E("^submeto o elemento (.*)$")
+    public WebElement submeterElemento(String campo) {
+        return submeterElemento(campo, IDENTIFICADOR_ID);
     }
 
     @E("^submeto o elemento (.*) buscado pelo (.*)$")
-    public void submeterElemento(String campo, String identificador) {
+    public WebElement submeterElemento(String campo, String identificador) {
         WebElement webElement = getEncontraCampo(identificador, campo);
         if (webElement != null) {
             webElement.submit();
         }
+        return webElement;
     }
 
     @E("^aguardo (\\d+) milisegundos para verificar se elemento (.*) buscando pelo (.*) esta presente$")
