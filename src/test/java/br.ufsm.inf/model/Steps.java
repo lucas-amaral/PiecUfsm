@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Lucas on 07/09/2015.
  */
-public class TesteFormulario {
+public class Steps {
     public static final String IDENTIFICADOR_ID = "id";
     public static final String IDENTIFICADOR_NOME = "nome";
     public static final String IDENTIFICADOR_NOME_CLASSE = "nome da classe";
