@@ -17,6 +17,22 @@ import static org.junit.Assert.*;
  * Created by Lucas on 07/09/2015.
  */
 public class TesteFormulario {
+    public static final String IDENTIFICADOR_ID = "id";
+    public static final String IDENTIFICADOR_NOME = "nome";
+    public static final String IDENTIFICADOR_NOME_CLASSE = "nome da classe";
+    public static final String IDENTIFICADOR_CSS = "css";
+    public static final String IDENTIFICADOR_XPATH = "xpath";
+    public static final String IDENTIFICADOR_TEXTO_DO_LINK = "Texto do link";
+
+    public static final String ATRIBUTO_COMPARACAO_ASSERT_TEXTO = "texto";
+    public static final String ATRIBUTO_COMPARACAO_ASSERT_NOME_TAG = "nome tag";
+    public static final String ATRIBUTO_COMPARACAO_ASSERT_ATRIBUTO = "atributo";
+    public static final String ATRIBUTO_COMPARACAO_ASSERT_VALOR_CSS = "valor css";
+    public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_HABILITADO = "campo habilitado";
+    public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_SELECIONADO = "campo selecionado";
+    public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_EXIBIDO = "campo exibido";
+    public static final String ATRIBUTO_COMPARACAO_URL = "url";
+
     private final SharedDriver webDriver = new SharedDriver();
 
     //@Before
@@ -120,37 +136,39 @@ public class TesteFormulario {
     }
 
     private Object getValorPropriedadeCampo(WebElement webElement, String atributo) {
-        if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_TEXTO)) {
+        if (atributo.equals(Steps.ATRIBUTO_COMPARACAO_ASSERT_TEXTO)) {
             return webElement.getText();
-        } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_NOME_TAG)) {
+        } else if (atributo.equals(Steps.ATRIBUTO_COMPARACAO_ASSERT_NOME_TAG)) {
             return webElement.getTagName();
-        } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_ATRIBUTO)) {
+        } else if (atributo.equals(Steps.ATRIBUTO_COMPARACAO_ASSERT_ATRIBUTO)) {
             return null;
-        } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_VALOR_CSS)) {
+        } else if (atributo.equals(Steps.ATRIBUTO_COMPARACAO_ASSERT_VALOR_CSS)) {
             return null;
-        } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_CAMPO_EXIBIDO)) {
+        } else if (atributo.equals(Steps.ATRIBUTO_COMPARACAO_ASSERT_CAMPO_EXIBIDO)) {
             return webElement.isDisplayed();
-        } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_CAMPO_SELECIONADO)) {
+        } else if (atributo.equals(Steps.ATRIBUTO_COMPARACAO_ASSERT_CAMPO_SELECIONADO)) {
             return webElement.isSelected();
-        } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_ASSERT_CAMPO_HABILITADO)) {
+        } else if (atributo.equals(Steps.ATRIBUTO_COMPARACAO_ASSERT_CAMPO_HABILITADO)) {
             return webElement.isEnabled();
-        } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_URL)) {
+        } else if (atributo.equals(Steps.ATRIBUTO_COMPARACAO_URL)) {
             return webDriver.getCurrentUrl();
         }
         return null;
     }
 
     private WebElement getEncontraCampo(String identificador, String campo) {
-        if (identificador.equals(TestePropriedades.IDENTIFICADOR_ID)) {
+        if (identificador.equals(Steps.IDENTIFICADOR_ID)) {
             return webDriver.findElement(By.id(campo));
-        } else if (identificador.equals(TestePropriedades.IDENTIFICADOR_NOME)) {
+        } else if (identificador.equals(Steps.IDENTIFICADOR_NOME)) {
             return webDriver.findElement(By.name(campo));
-        } else if (identificador.equals(TestePropriedades.IDENTIFICADOR_NOME_CLASSE)) {
+        } else if (identificador.equals(Steps.IDENTIFICADOR_NOME_CLASSE)) {
             return webDriver.findElement(By.className(campo));
-        } else if (identificador.equals(TestePropriedades.IDENTIFICADOR_CSS)) {
+        } else if (identificador.equals(Steps.IDENTIFICADOR_CSS)) {
             return webDriver.findElement(By.cssSelector(campo));
-        } else if (identificador.equals(TestePropriedades.IDENTIFICADOR_XPATH)) {
+        } else if (identificador.equals(Steps.IDENTIFICADOR_XPATH)) {
             return webDriver.findElement(By.xpath(campo));
+        } else if (identificador.equals(Steps.IDENTIFICADOR_TEXTO_DO_LINK)) {
+            return webDriver.findElement(By.linkText(campo));
         }
         return null;
     }
