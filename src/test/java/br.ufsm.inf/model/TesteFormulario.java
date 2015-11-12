@@ -136,6 +136,8 @@ public class TesteFormulario {
             return webElement.isEnabled();
         } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_URL)) {
             return webDriver.getCurrentUrl();
+        } else if (atributo.equals(TestePropriedades.ATRIBUTO_COMPARACAO_TITULO_PAGINA)) {
+            return webDriver.getTitle();
         }
         return null;
     }

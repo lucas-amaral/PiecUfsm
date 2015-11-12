@@ -44,6 +44,32 @@ Funcionalidade: Ações executadas por um aluno do curso de Ciência da Computa�
     E clico no elemento adicionarPiecDisciplina buscando pelo id
     Entao comparo a igualdade entre o valor esperado Sucesso! com atributo texto do elemento h4 buscando pelo css
 
+  @aceitacao
+  Cenario: Incorporar um plano já aprovado ao PIEC
+    Dado clico no elemento Sugestões buscando pelo texto do link
+    Quando clico no elemento button.btn.btn-default buscando pelo css
+    Entao comparo a igualdade entre o valor esperado PIEC - Online com atributo titulo da pagina do elemento null buscando pelo null
+    
+  @aceitacao
+  Cenario: Aprovar um PIEC após solicitação do aluno
+    Dado clico no elemento Sair buscando pelo texto do link
+    Quando preencho o campo login com o valor pbzorila buscando pelo id
+    E preencho o campo senha com o valor 123 buscando pelo id
+    E clico no elemento button.btn.btn-default buscando pelo css
+    E clico no elemento Sugestões buscando pelo texto do link
+    E clico no elemento button.btn.btn-default buscando pelo css
+    E clico no elemento Piec buscando pelo texto do link
+    E clico no elemento solicitar buscando pelo id
+    E clico no elemento Sair buscando pelo texto do link
+    E preencho o campo login com o valor colegiado buscando pelo id
+    E preencho o campo senha com o valor colegiado buscando pelo id
+    E clico no elemento button.btn.btn-default buscando pelo css
+    E clico no elemento a.tooltip-class > img buscando pelo css
+    E preencho o campo parecerRelator com o valor Ok! buscando pelo id
+    E preencho o campo parecerColegiado com o valor Aceito. buscando pelo id
+    E clico no elemento aprovar buscando pelo id
+    Entao comparo a igualdade entre o valor esperado Sucesso! com atributo texto do elemento h4 buscando pelo css
+
   @rejeicao
   Delineacao do Cenario: 1 - Não permitir inserir no PIEC disciplina que não faça parte do curso, sem o preenchimento do campo relevância da integralização
      2 - Não permitir cadastrar nova instituição com sigla já cadastrada

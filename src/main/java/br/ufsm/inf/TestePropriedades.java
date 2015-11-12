@@ -30,8 +30,9 @@ public class TestePropriedades {
     public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_SELECIONADO = "campo selecionado";
     public static final String ATRIBUTO_COMPARACAO_ASSERT_CAMPO_EXIBIDO = "campo exibido";
     public static final String ATRIBUTO_COMPARACAO_URL = "url";
+    public static final String ATRIBUTO_COMPARACAO_TITULO_PAGINA = "titulo da pagina";
 
-    public static final String urlSistema = "http://www.megatecnologia-si.com.br/piec";
+    public static final String urlSistema = "localhost";
 
     public static Teste teste(Class classe) {
         return (Teste) anotacao(classe);
