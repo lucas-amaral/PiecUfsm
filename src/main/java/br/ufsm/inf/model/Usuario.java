@@ -3,6 +3,8 @@ package br.ufsm.inf.model;
 import br.ufsm.inf.Teste;
 import br.ufsm.inf.TestePropriedades;
 
+import br.ufsm.inf.Teste;
+
 import javax.persistence.*;
 
 /**

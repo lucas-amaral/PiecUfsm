@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="PiecUfsm:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="PiecUfsm.war">
+      <element id="artifact" artifact-name="PiecUfsm:war exploded" />
+    </root>
+  </artifact>
+</component>

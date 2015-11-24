@@ -25,12 +25,11 @@ public class DisciplinaTeste {
     @Test
     public void cadastrarDisciplinaSucesso() {
         webDriver.get(url + "/cadastro-disciplina.htm");
-        webDriver.findElement(By.id("codigo")).sendKeys("ELC9999"); //input
-        webDriver.findElement(By.id("nome")).sendKeys("Teste de Disciplina"); //input
-        Select cargaHoraria = new Select(webDriver.findElement(By.id("cargaHoraria"))); //select
+        webDriver.findElement(By.id("codigo")).sendKeys("ELC9999");
+        webDriver.findElement(By.id("nome")).sendKeys("Teste de Disciplina");
+        Select cargaHoraria = new Select(webDriver.findElement(By.id("cargaHoraria")));
         cargaHoraria.selectByVisibleText("60");
         webDriver.findElement(By.id("ativa1")).click(); //checkbox
-        //todo: alterar para buscar uma instituição cadastrada no banco de dados
         Select instituicao = new Select(webDriver.findElement(By.id("idInstituicao")));
         instituicao.selectByVisibleText("UFSM - Universidade Federal de Santa Maria");
         webDriver.findElement(By.id("preAprovada1")).click();
@@ -38,7 +37,6 @@ public class DisciplinaTeste {
         assertEquals("Sucesso!", webDriver.findElement(By.cssSelector("h4")).getText());
         webDriver.findElement(By.id("salvar")).click();
         assertEquals("Sucesso!", webDriver.findElement(By.cssSelector("h4")).getText());
-        excluirDisciplinaSucesso();
     }
 
     @Test

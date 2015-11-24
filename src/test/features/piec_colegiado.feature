@@ -3,7 +3,7 @@
 Funcionalidade: Ações executadas por um membro do colegiado do curso de Ciência da Computação na aprovação/regeição de
   planos individuais de estudos complementares.
 
-  Contexto: Fazer login no sistema como um aluno
+  Contexto: Fazer login no sistema como um membro do colegiado
     Dado acesso o endereco /login.htm
     Quando preencho o campo login com o valor colegiado buscando pelo id
     E preencho o campo senha com o valor colegiado123 buscando pelo id
