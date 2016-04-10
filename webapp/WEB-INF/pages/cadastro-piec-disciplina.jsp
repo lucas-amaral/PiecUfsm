@@ -19,6 +19,7 @@
                         <form:label path="disciplina.nome">Nome</form:label>
                         <form:input path="disciplina.nome" cssClass="form-control" disabled="true"/>
                     </td>
+                    <c:set var="podeEditar" value="${not piecDisciplina.piec.solicitarAvalacao and (empty piecDisciplina.aprovada or piecDisciplina.aprovada)}"/>
                     <td>
                         <form:label path="disciplina.instituicao">Instituição</form:label>
                         <form:input path="disciplina.instituicao.sigla" cssClass="form-control" cssStyle="width: auto;" disabled="true"/>
@@ -34,19 +35,23 @@
                 <tr>
                     <td>
                         <form:label path="cursoOfertante">Curso ofertante</form:label>
-                        <form:input path="cursoOfertante" cssClass="form-control" cssStyle="width: auto;"/>
+                        <form:input path="cursoOfertante" cssClass="form-control" cssStyle="width: auto;" disabled="${not podeEditar}"/>
                     </td>
                     <td>
                         <form:label path="semestreAnoRealizacao" cssStyle="display: block;">Semetre/Ano de realização</form:label>
-                        <form:input path="semestreAnoRealizacao" cssClass="form-control" cssStyle="width: auto;" placeholder="I/AAAA ou II/AAAA"/>
+                        <form:input path="semestreAnoRealizacao" cssClass="form-control" cssStyle="width: auto;" placeholder="I/AAAA ou II/AAAA"  disabled="${not podeEditar}"/>
                     </td>
                     <td colspan="2">
                         <c:if test="${not piecDisciplina.disciplina.preAprovada}">
                             <label style="display: block;">Plano de ensino</label>
-                            <input type="file" name="arquivoPlanoEnsino" id="arquivoPlanoEnsino" style="margin: 0; display: inline-block;"/>
+                            <c:if test="${podeEditar}">
+                                <input type="file" name="arquivoPlanoEnsino" id="arquivoPlanoEnsino" style="margin: 0; display: inline-block;"/>
+                            </c:if>
                             <c:if test="${not empty piecDisciplina.planoEnsino}">
                                 <img class="tooltip-class" src="${pageContext.request.contextPath}/resources/img/Search.png" title="Ver arquivo" data-toggle="tooltip" data-placement="left" onclick="window.open('carregar-arquivo.htm?id=${piecDisciplina.planoEnsino.id}&abrir=true');"/>
-                                <img class="tooltip-class" src="${pageContext.request.contextPath}/resources/img/Cancel.png" title="Remover arquivo" data-toggle="tooltip" data-placement="left" onclick="submeteAcao('RemoverArquivo', document.getElementById('piecDisciplina'));"/>
+                                <%--<c:if test="${podeEditar}">--%>
+                                    <%--<img class="tooltip-class" src="${pageContext.request.contextPath}/resources/img/Cancel.png" title="Remover arquivo" data-toggle="tooltip" data-placement="left" onclick="submeteAcao('RemoverArquivo', document.getElementById('piecDisciplina'));"/>--%>
+                                <%--</c:if>--%>
                             </c:if>
                         </c:if>
                     </td>
@@ -55,7 +60,7 @@
                     <tr>
                         <td colspan="4">
                             <form:label path="relevanciaIntegralizacao">Relevancia da integralização</form:label>
-                            <form:textarea path="relevanciaIntegralizacao" cssClass="form-control" cssStyle="width: 100%;"
+                            <form:textarea path="relevanciaIntegralizacao" cssClass="form-control" cssStyle="width: 100%;" disabled="${not podeEditar}"
                                            rows="${2+((fn:length(piecDisciplina.relevanciaIntegralizacao)/350)*2)}"/>
                         </td>
                     </tr>
@@ -67,7 +72,7 @@
                     <input class="btn btn-danger" type="button" value="Remover"/>
                 </a>
             </c:if>
-            <c:if test="${sessionScope.usuarioLogado.membroColegiado or not piecDisciplina.piec.solicitarAvalacao}">
+            <c:if test="${podeEditar}">
                 <input class="btn btn-success" type="submit" value="Salvar" style="margin-right: 5px; float: right;"/>
             </c:if>
             <a href="${pageContext.request.contextPath}/cadastro-piec.htm?idPiec=${piecDisciplina.piec.id}"><button class="btn btn-default" type="button">Voltar para piec</button></a>

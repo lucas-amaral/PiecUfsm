@@ -40,6 +40,13 @@ public class CadastroPiecValidator {
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "piecDisciplinaAdicionar.relevanciaIntegralizacao", "field.required", "Preencha o campo relevância da integralização.");
                 if (piec.getPiecDisciplinaAdicionar().getArquivoPlanoEnsino().isEmpty()) {
                     errors.reject("piecDisciplinaAdicionar.arquivoPlanoEnsino", "Insira o arquivo do plano de ensino da disciplina desejada.");
+                } else {
+                    String extensao = piec.getPiecDisciplinaAdicionar().getArquivoPlanoEnsino().getOriginalFilename().substring(
+                            piec.getPiecDisciplinaAdicionar().getArquivoPlanoEnsino().getOriginalFilename().lastIndexOf(".")+1,
+                            piec.getPiecDisciplinaAdicionar().getArquivoPlanoEnsino().getOriginalFilename().length());
+                    if (!extensao.equals("pdf") && !extensao.equals("PDF")) {
+                        errors.reject("piecDisciplinaAdicionar.arquivoPlanoEnsino", "Formato do arquivo inválido, insira um arquivo no formato pdf.");
+                    }
                 }
             }
         } else if (acao != null && acao.equals("Aprovar")) {
@@ -49,6 +56,13 @@ public class CadastroPiecValidator {
         } else if (acao != null && acao.equals("AdicionarArquivo")) {
             if (piec.getArquivoHistoricoEscolar().isEmpty()) {
                 errors.reject("arquivoHistoricoEscolar", "Selecione o documento que deseja vincular ao piec.");
+            } else {
+                String extensao = piec.getArquivoHistoricoEscolar().getOriginalFilename().substring(
+                        piec.getArquivoHistoricoEscolar().getOriginalFilename().lastIndexOf(".")+1,
+                        piec.getArquivoHistoricoEscolar().getOriginalFilename().length());
+                if (!extensao.equals("pdf") && !extensao.equals("PDF")) {
+                    errors.reject("arquivoHistoricoEscolar", "Formato do arquivo inválido, insira um arquivo no formato pdf.");
+                }
             }
         }
     }

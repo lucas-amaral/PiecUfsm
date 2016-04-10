@@ -49,13 +49,12 @@ public class CadastroPiecDisciplinaController {
         if (!errors.hasErrors()) {
             if (acao != null && acao.equals("RemoverPiecDisciplina")) {
                 return remover(piecDisciplina, model);
-            } else if (acao != null && acao.equals("RemoverArquivo")) {
+            } else if (piecDisciplina.getArquivoPlanoEnsino() != null && !piecDisciplina.getArquivoPlanoEnsino().isEmpty()) {
                 Arquivo arquivo = piecDisciplina.getPlanoEnsino();
                 piecDisciplina.setPlanoEnsino(null);
                 cadastroService.atualizaObjeto(piecDisciplina);
-                cadastroService.removeObject(Arquivo.class, arquivo.getId());
-            } else if (piecDisciplina.getArquivoPlanoEnsino() != null && !piecDisciplina.getArquivoPlanoEnsino().isEmpty()) {
                 piecDisciplina.setPlanoEnsino(cadastroService.carregarArquivo(piecDisciplina.getArquivoPlanoEnsino(), piecDisciplina.getPlanoEnsino(), Arquivo.TIPO_PLANO_ENSINO));
+                cadastroService.removeObject(Arquivo.class, arquivo.getId());
             }
             cadastroService.saveObject(piecDisciplina);
             model.addAttribute("sucesso", "Disciplina do piec alterada com sucesso");

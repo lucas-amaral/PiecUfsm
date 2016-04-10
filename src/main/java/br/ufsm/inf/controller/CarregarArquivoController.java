@@ -1,15 +1,11 @@
 package br.ufsm.inf.controller;
 
-import br.ufsm.inf.model.Arquivo;
-import br.ufsm.inf.model.ArquivoTemporario;
-import br.ufsm.inf.model.Piec;
+import br.ufsm.inf.model.*;
 import br.ufsm.inf.service.CadastroService;
-//import net.sf.jasperreports.engine.*;
-//import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import com.lowagie.text.Document;
+import com.lowagie.text.pdf.*;
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.j2ee.servlets.ImageServlet;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -95,22 +90,124 @@ public class CarregarArquivoController {
 
     @RequestMapping("/gerar-pdf.htm")
     public void gerar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws SQLException, ClassNotFoundException, JRException, DocumentException, IOException {
-        Map<String, Object> parametro = new HashMap<String, Object>();
+        Usuario usuarioSecao = (Usuario) httpServletRequest.getSession().getAttribute("usuarioLogado");
         Piec piec = cadastroService.getPiec(Long.valueOf(httpServletRequest.getParameter("idPiec")));
-        parametro.put("idPiec", piec.getId());
-        parametro.put("ufsm_logo", httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/ufsm_logo.png");
-        parametro.put("inf_logo", httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/inf_logo.png");
-        Arquivo arquivoJasper = cadastroService.arquivoJasper();
-        JasperReport report = JasperCompileManager.compileReport(arquivoJasper.getArquivo().getBinaryStream());
-        JasperPrint print = JasperFillManager.fillReport(report, parametro, cadastroService.getDao().getConnection());
-        httpServletRequest.getSession().setAttribute(ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, print);
-        OutputStream out = httpServletResponse.getOutputStream();
-        httpServletResponse.setContentType("application/pdf");
-        httpServletResponse.setHeader("Content-Disposition","inline; filename=\"piec_"+ piec.getAluno().getMatricula() +".pdf\"");
-        JRPdfExporter pdfExporter = new JRPdfExporter();
-        pdfExporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-        pdfExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, out);
-        pdfExporter.exportReport();
+        if (piec != null && piec.getId() != null) {
+            if (usuarioSecao.getTipo().equals(Usuario.TIPO_COLEGIADO) || piec.getId().equals(usuarioSecao.getPiec().getId())) {
+                Map<String, Object> parametro = new HashMap<String, Object>();
+                parametro.put("idPiec", piec.getId());
+                parametro.put("ufsm_logo", httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/ufsm_logo.png");
+                parametro.put("inf_logo", httpServletRequest.getSession().getServletContext().getRealPath("/") + "/resources/img/inf_logo.png");
+                Arquivo arquivoJasper = cadastroService.arquivoJasper();
+                JasperReport report = JasperCompileManager.compileReport(arquivoJasper.getArquivo().getBinaryStream());
+                JasperPrint print = JasperFillManager.fillReport(report, parametro, cadastroService.getDao().getConnection());
+                httpServletRequest.getSession().setAttribute(ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, print);
+                httpServletResponse.setContentType("application/pdf");
+                httpServletResponse.setHeader("Content-Disposition","inline; filename=\"piec_"+ piec.getAluno().getMatricula() +".pdf\"");
+                JRPdfExporter pdfExporter = new JRPdfExporter();
+        //        pdfExporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+        //        pdfExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, out);
+        //        pdfExporter.exportReport();
+                List<InputStream> pdfs = new ArrayList<InputStream>();
+                httpServletResponse.setHeader("Pragma", "public");
+                httpServletResponse.setHeader("Cache-Control","private, must-revalidate");
+                ServletOutputStream ouputStream = httpServletResponse.getOutputStream();
 
+                File pdfJasper = new File("piec_"+ piec.getAluno().getMatricula() +".pdf");
+                pdfJasper.createNewFile();
+                FileOutputStream arquivo = new FileOutputStream(pdfJasper);
+                JasperExportManager.exportReportToPdfStream(print, arquivo);
+                pdfs.add(new FileInputStream(pdfJasper));
+                for (Arquivo pdf : piec.getDocumentos()) {
+                    pdfs.add(pdf.getArquivo().getBinaryStream());
+                }
+                for (PiecDisciplina piecDisciplina : piec.getPiecDisciplinas()) {
+                    if (piecDisciplina.getPlanoEnsino() != null && piecDisciplina.getPlanoEnsino().getArquivo() != null) {
+                        pdfs.add(piecDisciplina.getPlanoEnsino().getArquivo().getBinaryStream());
+                    }
+                }
+                try {
+                    juntarPdfs(pdfs, ouputStream, true);
+                } catch (com.lowagie.text.DocumentException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void geraPdfUnico(List<InputStream> pdfs, String nomeArquivo) {
+        try {
+            OutputStream out = new FileOutputStream(new File(nomeArquivo + ".pdf"));
+            juntarPdfs(pdfs, out, true);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (com.lowagie.text.DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void juntarPdfs(List<InputStream> documentos, OutputStream outputStream, boolean paginate) throws DocumentException, IOException, com.lowagie.text.DocumentException {
+        Document document = new Document();
+        try {
+            List<InputStream> pdfs = documentos;
+            List<PdfReader> readers = new ArrayList<PdfReader>();
+            int totalPages = 0;
+            Iterator<InputStream> iteratorPDFs = pdfs.iterator();
+
+            while (iteratorPDFs.hasNext()) {
+                InputStream pdf = iteratorPDFs.next();
+                PdfReader pdfReader = new PdfReader(pdf);
+                readers.add(pdfReader);
+                totalPages += pdfReader.getNumberOfPages();
+            }
+            // Create a writer for the outputstream
+            PdfWriter writer = PdfWriter.getInstance(document, outputStream);
+
+            document.open();
+            BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA,BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            PdfContentByte cb = writer.getDirectContent(); // Holds the PDF
+            PdfImportedPage page;
+            int currentPageNumber = 0;
+            int pageOfCurrentReaderPDF = 0;
+            Iterator<PdfReader> iteratorPDFReader = readers.iterator();
+            while (iteratorPDFReader.hasNext()) {
+                PdfReader pdfReader = iteratorPDFReader.next();
+                while (pageOfCurrentReaderPDF < pdfReader.getNumberOfPages()) {
+                    document.newPage();
+                    pageOfCurrentReaderPDF++;
+                    currentPageNumber++;
+                    page = writer.getImportedPage(pdfReader,pageOfCurrentReaderPDF);
+                    cb.addTemplate(page, 0, 0);
+
+                    // Code for pagination.
+                    if (paginate) {
+                        cb.beginText();
+                        cb.setFontAndSize(bf, 9);
+                        cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "Página " + currentPageNumber + " de " + totalPages, 520,5, 0);
+                        cb.endText();
+                    }
+                }
+                pageOfCurrentReaderPDF = 0;
+            }
+            outputStream.flush();
+            document.close();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (document.isOpen())
+                document.close();
+            try {
+                if (outputStream != null)
+                    outputStream.close();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
     }
 }

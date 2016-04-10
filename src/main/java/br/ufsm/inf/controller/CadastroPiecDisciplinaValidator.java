@@ -14,14 +14,19 @@ import java.util.regex.Pattern;
 public class CadastroPiecDisciplinaValidator {
 
     public void validate(PiecDisciplina piecDisciplina, Errors errors, String acao)  {
-        if (piecDisciplina.getAprovada() == null || !piecDisciplina.getAprovada()) {
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "relevanciaIntegralizacao", "field.required", "Preencha o campo relevância da integralização.");
-            if (piecDisciplina.getPlanoEnsino() == null && piecDisciplina.getArquivoPlanoEnsino().isEmpty() && (acao == null || !acao.equals("RemoverArquivo"))) {
-                errors.reject("arquivoPlanoEnsino", "Insira o arquivo do plano de ensino da disciplina desejada.");
+        if (piecDisciplina.getArquivoPlanoEnsino() != null && !piecDisciplina.getArquivoPlanoEnsino().isEmpty()) {
+            String extensao = piecDisciplina.getArquivoPlanoEnsino().getOriginalFilename().substring(
+                    piecDisciplina.getArquivoPlanoEnsino().getOriginalFilename().lastIndexOf(".")+1,
+                    piecDisciplina.getArquivoPlanoEnsino().getOriginalFilename().length());
+            if (!extensao.equals("pdf") && !extensao.equals("PDF")) {
+                errors.reject("arquivoPlanoEnsino", "Formato do arquivo inválido, insira um arquivo no formato pdf.");
             }
         }
-        if (!Pattern.compile("(I|II)/[0-9][0-9][0-9][0-9]").matcher(piecDisciplina.getSemestreAnoRealizacao()).matches()) {
-            errors.reject("semestreAnoRealizacao", "Formato incorreto para semestre e ano de realização, por favor, informe no seguinte formato II/1984 ou I/2001.");
+        if (piecDisciplina.getAprovada() == null || !piecDisciplina.getAprovada()) {
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "relevanciaIntegralizacao", "field.required", "Preencha o campo relevância da integralização.");
+            if (piecDisciplina.getPlanoEnsino() == null && piecDisciplina.getArquivoPlanoEnsino().isEmpty() && acao == null) {
+                errors.reject("arquivoPlanoEnsino", "Insira o arquivo do plano de ensino da disciplina desejada.");
+            }
         }
     }
 }

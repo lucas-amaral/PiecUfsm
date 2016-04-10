@@ -113,7 +113,10 @@
                             <td style="text-align: center;">
                                 ${piecDisciplina.semestreAnoRealizacao}<c:if test="${empty piecDisciplina.semestreAnoRealizacao}"> - </c:if>
                             </td>
-                            <td style="width: 1px; text-align: right; padding: 9px 1px;"  <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id}">colspan="2" </c:if>>
+                            <td style="width: 1px; text-align: right; padding: 9px 1px; white-space: nowrap;"  <c:if test="${sessionScope.usuarioLogado.id eq piec.aluno.id}">colspan="2" </c:if>>
+                                <c:if test="${not empty piecDisciplina.planoEnsino}">
+                                    <img class="tooltip-class" src="${pageContext.request.contextPath}/resources/img/Search.png" data-toggle="tooltip" data-placement="left" title="Ver plano de ensino" onclick="window.open('carregar-arquivo.htm?id=${piecDisciplina.planoEnsino.id}&abrir=true');"/>
+                                </c:if>
                                 <a class="tooltip-class" href="${pageContext.request.contextPath}/cadastro-piec-disciplina.htm?idPiecDisciplina=${piecDisciplina.id}" data-toggle="tooltip" data-placement="left" title="Editar disciplina"><img src="${pageContext.request.contextPath}/resources/img/Write.png"  id="editarPiecDisciplina_${piecDisciplina.id}"/></a>
                                 <c:if test="${(empty piecDisciplina.aprovada or piecDisciplina.aprovada) and sessionScope.usuarioLogado.id eq piec.aluno.id and not piec.solicitarAvalacao}">
                                     <a href="${pageContext.request.contextPath}/cadastro-disciplina-piec-remover.htm?idPiecDisciplinaRemover=${piecDisciplina.id}">
