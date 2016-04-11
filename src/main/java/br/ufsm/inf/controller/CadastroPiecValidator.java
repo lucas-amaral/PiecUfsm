@@ -35,7 +35,8 @@ public class CadastroPiecValidator {
                     errors.reject("sigla", "Sigla já cadastrada em outra instituição.");
                 }
             }
-            if (piec.getPiecDisciplinaAdicionar().getDisciplina() != null && !piec.getPiecDisciplinaAdicionar().getDisciplina().getPreAprovada()
+            if (disciplina != null && !disciplina.getPreAprovada()
+                    ||piec.getPiecDisciplinaAdicionar().getDisciplina() != null && !piec.getPiecDisciplinaAdicionar().getDisciplina().getPreAprovada()
                     || piec.getNovaDisciplina().getCodigo() != null && !piec.getNovaDisciplina().getCodigo().equals("")) {
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "piecDisciplinaAdicionar.relevanciaIntegralizacao", "field.required", "Preencha o campo relevância da integralização.");
                 if (piec.getPiecDisciplinaAdicionar().getArquivoPlanoEnsino().isEmpty()) {
