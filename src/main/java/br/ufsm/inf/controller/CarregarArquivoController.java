@@ -113,8 +113,8 @@ public class CarregarArquivoController {
                 httpServletResponse.setHeader("Cache-Control","private, must-revalidate");
                 ServletOutputStream ouputStream = httpServletResponse.getOutputStream();
 
-                File pdfJasper = new File("piec_"+ piec.getAluno().getMatricula() +".pdf");
-                pdfJasper.createNewFile();
+                File pdfJasper = new File("/tmp/piec_"+ piec.getAluno().getMatricula() +".pdf");
+//                pdfJasper.createNewFile();
                 FileOutputStream arquivo = new FileOutputStream(pdfJasper);
                 JasperExportManager.exportReportToPdfStream(print, arquivo);
                 pdfs.add(new FileInputStream(pdfJasper));
